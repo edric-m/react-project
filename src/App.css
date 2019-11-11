@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /*text-align: center;*/
 }
 
 .App-logo {
@@ -19,4 +19,34 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+#page-content {
+  max-width: 700px;
+  margin: auto;
+  padding-top: 20px;
+}
+
+/*-----------Nav bar styles-------------*/
+.myNavBar ul {
+  text-align: center;
+  border-style: none none solid none;
+  margin: 0;
+  padding: 0;
+}
+
+.myNavBar li {
+  display: inline-flex;
+}
+
+.myNavBar li a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.myNavBar li a:hover {
+  background-color: rgb(223, 223, 223);
 }
