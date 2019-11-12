@@ -5,24 +5,24 @@ class Fretboard extends React.Component {
     render() {
         return (
             <>
-            <h2>Key: {this.props.keyNote}</h2>
+            <h2>Fretboard</h2>
             <div>
-                <String tuning="E" keyNote={this.props.keyNote} />
+                <String tuning={this.props.tuning[5]} keyNote={this.props.keyNote} scale={this.props.scale} />
             </div>
             <div>
-                <String tuning="B" keyNote={this.props.keyNote} />
+                <String tuning={this.props.tuning[4]} keyNote={this.props.keyNote} scale={this.props.scale} />
             </div>
             <div>
-                <String tuning="G" keyNote={this.props.keyNote} />
+                <String tuning={this.props.tuning[3]} keyNote={this.props.keyNote} scale={this.props.scale} />
             </div>
             <div>
-                <String tuning="D" keyNote={this.props.keyNote} />
+                <String tuning={this.props.tuning[2]} keyNote={this.props.keyNote} scale={this.props.scale} />
             </div>
             <div>
-                <String tuning="A" keyNote={this.props.keyNote} />
+                <String tuning={this.props.tuning[1]} keyNote={this.props.keyNote} scale={this.props.scale} />
             </div>
             <div>
-                <String tuning="E" keyNote={this.props.keyNote} />
+                <String tuning={this.props.tuning[0]} keyNote={this.props.keyNote} scale={this.props.scale} />
             </div>
             </>
         );

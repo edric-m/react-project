@@ -4,17 +4,31 @@ import Fretboard from '../components/fretboard.js';
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {chosenNote: "C"};
+        this.state = {
+            chosenNote: "C",
+            scaleType: "M",
+            tuning: "EADGBE"
+        };
     }
 
     chooseKey(note) {
         this.setState({chosenNote: note});
     }
 
+    chooseScale(scale) {
+        this.setState({scaleType: scale});
+    }
+
+    chooseTuning(tuning) {
+        this.setState({tuning: tuning});
+    }
+
     render() {
         return (
             <> 
-            <h1>Fretboard</h1>
+            <Fretboard keyNote={this.state.chosenNote} scale={this.state.scaleType} tuning={this.state.tuning} />
+
+            <h2>Key: {this.state.chosenNote}{this.state.scaleType}</h2>
             <p>Choose key:</p>
             <ul className="choose-key">
                 <li onClick={(e) => this.chooseKey("C")}>C</li>
@@ -29,11 +43,16 @@ class HomePage extends React.Component {
                 <li onClick={(e) => this.chooseKey("A")}>A</li>
                 <li onClick={(e) => this.chooseKey("A#")}>A#</li>
                 <li onClick={(e) => this.chooseKey("B")}>B</li>
+                <li onClick={(e) => this.chooseScale("M")}>major</li>
+                <li onClick={(e) => this.chooseScale("m")}>minor</li>
             </ul>
-            
-            <Fretboard keyNote={this.state.chosenNote} />
-
-            <h1>Tuning:</h1>
+            <p>Guitar tuning:</p>
+            <ul className="choose-key">
+                <li onClick={(e) => this.chooseTuning("EADGBE")}>EADGBE</li>
+                <li onClick={(e) => this.chooseTuning("DADGBE")}>DADGBE</li>
+                <li onClick={(e) => this.chooseTuning("DADGBD")}>DADGBD</li>
+                <li onClick={(e) => this.chooseTuning("DADGAD")}>DADGAD</li>
+            </ul>
             </>
         )
     }

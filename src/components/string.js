@@ -144,7 +144,7 @@ class String extends React.Component {
         let x = this.chooseString(this.props.tuning, this.props.keyNote).split(" ");
         return (
             x.map((item,key) => (
-                <Note note={item} />)
+                <Note note={item} scale={this.props.scale}/>)
             )
         );
     }
