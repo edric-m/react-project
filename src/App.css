@@ -1,6 +1,8 @@
-.App {
-  /*text-align: center;*/
+/*-------Generated styles -----*/
+/*.App {
+  text-align: center;
 }
+*/
 
 .App-logo {
   height: 40vmin;
@@ -21,6 +23,7 @@
   color: #09d3ac;
 }
 
+/*-----------Body---------------------*/
 #page-content {
   max-width: 700px;
   margin: auto;
@@ -49,4 +52,36 @@
 
 .myNavBar li a:hover {
   background-color: rgb(223, 223, 223);
+}
+
+/*----------- fretboard -------------*/
+.note {
+  display: inline;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 2px;
+}
+
+.note-maj {
+  background-color: rgb(187, 193, 197);
+  display: inline;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 2px;
+}
+
+.note-root {
+  background-color: rgb(148, 147, 147);
+  display: inline;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 2px;
+}
+
+/*----------key selector ------------*/
+.choose-key li {
+  display: inline;
+  padding: 5px;
+}
+
+.choose-key li:hover {
+  background-color: rgb(187, 193, 197);
+  cursor: pointer;
 }
