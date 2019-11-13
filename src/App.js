@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import NavBar from './NavBar.js';
+import Footer from './Footer.js';
 import HomePage from './pages/HomePage.js';
 import AboutPage from './pages/AboutPage.js';
 
@@ -18,6 +19,7 @@ class App extends Component {
             <Route path="/" component={HomePage} exact />
             <Route path="/about" component={AboutPage} />
           </div>
+          <Footer />
         </div>
       </Router>
       

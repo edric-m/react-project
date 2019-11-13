@@ -24,6 +24,8 @@ class Fretboard extends React.Component {
             <div>
                 <String tuning={this.props.tuning[0]} keyNote={this.props.keyNote} scale={this.props.scale} />
             </div>
+            <h2>Key: {this.props.keyNote}{this.props.scale}</h2>
+            <String tuning="A" keyNote={this.props.keyNote} scale={this.props.scale} />
             </>
         );
     }

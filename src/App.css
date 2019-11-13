@@ -54,25 +54,45 @@
   background-color: rgb(223, 223, 223);
 }
 
+/*----------- header + footer -------------*/
+footer {
+  /*position: fixed; footer always stays in view*/
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(248, 247, 247);
+  color: rgb(199, 199, 199);
+  text-align: center;
+  box-shadow: 0 50vh 0 50vh rgb(248, 247, 247);  /*fill footer to the bottom of page*/
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
 /*----------- fretboard -------------*/
 .note {
-  display: inline;
+  display: inline-block;
   font-family: 'Courier New', Courier, monospace;
-  padding: 2px;
+  padding: 10px;
+  margin: 0px;
+  min-width: 20px;
 }
 
 .note-scale {
   background-color: rgb(187, 193, 197);
-  display: inline;
+  display: inline-block;
   font-family: 'Courier New', Courier, monospace;
-  padding: 2px;
+  padding: 10px;
+  margin: 0px;
+  min-width: 20px;
 }
 
 .note-root {
   background-color: rgb(148, 147, 147);
-  display: inline;
+  display: inline-block;
   font-family: 'Courier New', Courier, monospace;
-  padding: 2px;
+  padding: 10px;
+  margin: 0px;
+  min-width: 20px;
 }
 
 /*----------key selector ------------*/

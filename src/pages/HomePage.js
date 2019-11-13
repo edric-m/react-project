@@ -28,7 +28,6 @@ class HomePage extends React.Component {
             <> 
             <Fretboard keyNote={this.state.chosenNote} scale={this.state.scaleType} tuning={this.state.tuning} />
 
-            <h2>Key: {this.state.chosenNote}{this.state.scaleType}</h2>
             <p>Choose key:</p>
             <ul className="choose-key">
                 <li onClick={(e) => this.chooseKey("C")}>C</li>
@@ -45,6 +44,8 @@ class HomePage extends React.Component {
                 <li onClick={(e) => this.chooseKey("B")}>B</li>
                 <li onClick={(e) => this.chooseScale("M")}>major</li>
                 <li onClick={(e) => this.chooseScale("m")}>minor</li>
+                <li onClick={(e) => (e)}>sharps #</li>
+                <li onClick={(e) => (e)}>flats b</li>
             </ul>
             <p>Guitar tuning:</p>
             <ul className="choose-key">
@@ -52,6 +53,9 @@ class HomePage extends React.Component {
                 <li onClick={(e) => this.chooseTuning("DADGBE")}>DADGBE</li>
                 <li onClick={(e) => this.chooseTuning("DADGBD")}>DADGBD</li>
                 <li onClick={(e) => this.chooseTuning("DADGAD")}>DADGAD</li>
+                <li onClick={(e) => this.chooseTuning("DGDGBD")}>DGDGBD</li>
+                <li onClick={(e) => this.chooseTuning("GGDGBD")}>GGDGBD</li>
+                <li onClick={(e) => this.chooseTuning("DADADD")}>DADADD</li>
             </ul>
             </>
         )

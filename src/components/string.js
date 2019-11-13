@@ -56,74 +56,74 @@ class String extends React.Component {
         switch(tuning) {
             case 'E':
                 //return 'E,F,F#,G,G#,A,A#,B,C,C#,D,D#,E';
-                return this.getVal(notes, "E") + ' ' + 
-                this.getVal(notes, "F") + ' ' +
-                this.getVal(notes, "F#") + ' ' +
-                this.getVal(notes, "G") + ' ' +
-                this.getVal(notes, "G#") + ' ' +
-                this.getVal(notes, "A") + ' ' +
-                this.getVal(notes, "A#") + ' ' +
-                this.getVal(notes, "B") + ' ' +
-                this.getVal(notes, "C") + ' ' +
-                this.getVal(notes, "C#") + ' ' +
-                this.getVal(notes, "D") + ' ' +
-                this.getVal(notes, "D#");
+                return [this.getVal(notes, "E"), 
+                this.getVal(notes, "F"),
+                this.getVal(notes, "F#"),
+                this.getVal(notes, "G"),
+                this.getVal(notes, "G#"),
+                this.getVal(notes, "A"),
+                this.getVal(notes, "A#"),
+                this.getVal(notes, "B"),
+                this.getVal(notes, "C"),
+                this.getVal(notes, "C#"),
+                this.getVal(notes, "D"),
+                this.getVal(notes, "D#")];
             case 'A':
                 //return 'A,A#,B,C,C#,D,D#,E,F,F#,G,G#,A';
-                return this.getVal(notes, "A") + ' ' + 
-                this.getVal(notes, "A#") + ' ' +
-                this.getVal(notes, "B") + ' ' +
-                this.getVal(notes, "C") + ' ' +
-                this.getVal(notes, "C#") + ' ' +
-                this.getVal(notes, "D") + ' ' +
-                this.getVal(notes, "D#") + ' ' +
-                this.getVal(notes, "E") + ' ' +
-                this.getVal(notes, "F") + ' ' +
-                this.getVal(notes, "F#") + ' ' +
-                this.getVal(notes, "G") + ' ' +
-                this.getVal(notes, "G#");
+                return [this.getVal(notes, "A"), 
+                this.getVal(notes, "A#"),
+                this.getVal(notes, "B"),
+                this.getVal(notes, "C"),
+                this.getVal(notes, "C#"),
+                this.getVal(notes, "D"),
+                this.getVal(notes, "D#"),
+                this.getVal(notes, "E"),
+                this.getVal(notes, "F"),
+                this.getVal(notes, "F#"),
+                this.getVal(notes, "G"),
+                this.getVal(notes, "G#")];
             case 'D':
                 //return 'D,D#,E,F,F#,G,G#,A,A#,B,C,C#,D';
-                return this.getVal(notes, "D") + ' ' + 
-                this.getVal(notes, "D#") + ' ' +
-                this.getVal(notes, "E") + ' ' +
-                this.getVal(notes, "F") + ' ' +
-                this.getVal(notes, "F#") + ' ' +
-                this.getVal(notes, "G") + ' ' +
-                this.getVal(notes, "G#") + ' ' +
-                this.getVal(notes, "A") + ' ' +
-                this.getVal(notes, "A#") + ' ' +
-                this.getVal(notes, "B") + ' ' +
-                this.getVal(notes, "C") + ' ' +
-                this.getVal(notes, "C#");
+                return [this.getVal(notes, "D"), 
+                this.getVal(notes, "D#"),
+                this.getVal(notes, "E"),
+                this.getVal(notes, "F"),
+                this.getVal(notes, "F#"),
+                this.getVal(notes, "G"),
+                this.getVal(notes, "G#"),
+                this.getVal(notes, "A"),
+                this.getVal(notes, "A#"),
+                this.getVal(notes, "B"),
+                this.getVal(notes, "C"),
+                this.getVal(notes, "C#")];
             case 'G':
                 //return 'G,G#,A,A#,B,C,C#,D,D#,E,F,F#,G';
-                return this.getVal(notes, "G") + ' ' + 
-                this.getVal(notes, "G#") + ' ' +
-                this.getVal(notes, "A") + ' ' +
-                this.getVal(notes, "A#") + ' ' +
-                this.getVal(notes, "B") + ' ' +
-                this.getVal(notes, "C") + ' ' +
-                this.getVal(notes, "C#") + ' ' +
-                this.getVal(notes, "D") + ' ' +
-                this.getVal(notes, "D#") + ' ' +
-                this.getVal(notes, "E") + ' ' +
-                this.getVal(notes, "F") + ' ' +
-                this.getVal(notes, "F#");
+                return [this.getVal(notes, "G"), 
+                this.getVal(notes, "G#"),
+                this.getVal(notes, "A"),
+                this.getVal(notes, "A#"),
+                this.getVal(notes, "B"),
+                this.getVal(notes, "C"),
+                this.getVal(notes, "C#"),
+                this.getVal(notes, "D"),
+                this.getVal(notes, "D#"),
+                this.getVal(notes, "E"),
+                this.getVal(notes, "F"),
+                this.getVal(notes, "F#")];
             case 'B':
                 //return 'B,C,C#,D,D#,E,F,F#,G,G#,A,A#,B';
-                return this.getVal(notes, "B") + ' ' + 
-                this.getVal(notes, "C") + ' ' +
-                this.getVal(notes, "C#") + ' ' +
-                this.getVal(notes, "D") + ' ' +
-                this.getVal(notes, "D#") + ' ' +
-                this.getVal(notes, "E") + ' ' +
-                this.getVal(notes, "F") + ' ' +
-                this.getVal(notes, "F#") + ' ' +
-                this.getVal(notes, "G") + ' ' +
-                this.getVal(notes, "G#") + ' ' +
-                this.getVal(notes, "A") + ' ' +
-                this.getVal(notes, "A#");
+                return [this.getVal(notes, "B"), 
+                this.getVal(notes, "C"),
+                this.getVal(notes, "C#"),
+                this.getVal(notes, "D"),
+                this.getVal(notes, "D#"),
+                this.getVal(notes, "E"),
+                this.getVal(notes, "F"),
+                this.getVal(notes, "F#"),
+                this.getVal(notes, "G"),
+                this.getVal(notes, "G#"),
+                this.getVal(notes, "A"),
+                this.getVal(notes, "A#")];
             default:
                 return 'n/a';
         }
@@ -137,14 +137,14 @@ class String extends React.Component {
                 result = notes[i].value;
             }
         }
-        return result.toString(10);
+        return {"note" : note , "degree" : result.toString(10)};
     }
 
     render() {
-        let x = this.chooseString(this.props.tuning, this.props.keyNote).split(" ");
+        let x = this.chooseString(this.props.tuning, this.props.keyNote);
         return (
             x.map((item,key) => (
-                <Note note={item} scale={this.props.scale}/>)
+                <Note note={item.note} degree={item.degree} scale={this.props.scale}/>)
             )
         );
     }
