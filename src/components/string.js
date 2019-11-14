@@ -55,89 +55,46 @@ class String extends React.Component {
 
         switch(tuning) {
             case 'E':
-                //return 'E,F,F#,G,G#,A,A#,B,C,C#,D,D#,E';
-                return [this.getVal(notes, "E"), 
-                this.getVal(notes, "F"),
-                this.getVal(notes, "F#"),
-                this.getVal(notes, "G"),
-                this.getVal(notes, "G#"),
-                this.getVal(notes, "A"),
-                this.getVal(notes, "A#"),
-                this.getVal(notes, "B"),
-                this.getVal(notes, "C"),
-                this.getVal(notes, "C#"),
-                this.getVal(notes, "D"),
-                this.getVal(notes, "D#")];
+                return this.getVals(notes, ["E","F","F#","G","G#","A","A#","B","C","C#","D","D#"]);
+            case 'F':
+                return this.getVals(notes, ["F","F#","G","G#","A","A#","B","C","C#","D","D#","E"]);
+            case "F#":
+                return this.getVals(notes, ["F#","G","G#","A","A#","B","C","C#","D","D#","E","F"]);
+            case 'C':
+                return this.getVals(notes, ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]);
+            case "C#":
+                return this.getVals(notes, ["C#","D","D#","E","F","F#","G","G#","A","A#","B","C"]);
             case 'A':
-                //return 'A,A#,B,C,C#,D,D#,E,F,F#,G,G#,A';
-                return [this.getVal(notes, "A"), 
-                this.getVal(notes, "A#"),
-                this.getVal(notes, "B"),
-                this.getVal(notes, "C"),
-                this.getVal(notes, "C#"),
-                this.getVal(notes, "D"),
-                this.getVal(notes, "D#"),
-                this.getVal(notes, "E"),
-                this.getVal(notes, "F"),
-                this.getVal(notes, "F#"),
-                this.getVal(notes, "G"),
-                this.getVal(notes, "G#")];
+                return this.getVals(notes, ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"]);
+            case "A#":
+                return this.getVals(notes, ["A#","B","C","C#","D","D#","E","F","F#","G","G#","A"]);
             case 'D':
-                //return 'D,D#,E,F,F#,G,G#,A,A#,B,C,C#,D';
-                return [this.getVal(notes, "D"), 
-                this.getVal(notes, "D#"),
-                this.getVal(notes, "E"),
-                this.getVal(notes, "F"),
-                this.getVal(notes, "F#"),
-                this.getVal(notes, "G"),
-                this.getVal(notes, "G#"),
-                this.getVal(notes, "A"),
-                this.getVal(notes, "A#"),
-                this.getVal(notes, "B"),
-                this.getVal(notes, "C"),
-                this.getVal(notes, "C#")];
+                return this.getVals(notes, ["D","D#","E","F","F#","G","G#","A","A#","B","C","C#"]);
+            case "D#":
+                return this.getVals(notes, ["D#","E","F","F#","G","G#","A","A#","B","C","C#","D"]);
             case 'G':
-                //return 'G,G#,A,A#,B,C,C#,D,D#,E,F,F#,G';
-                return [this.getVal(notes, "G"), 
-                this.getVal(notes, "G#"),
-                this.getVal(notes, "A"),
-                this.getVal(notes, "A#"),
-                this.getVal(notes, "B"),
-                this.getVal(notes, "C"),
-                this.getVal(notes, "C#"),
-                this.getVal(notes, "D"),
-                this.getVal(notes, "D#"),
-                this.getVal(notes, "E"),
-                this.getVal(notes, "F"),
-                this.getVal(notes, "F#")];
+                return this.getVals(notes, ["G","G#","A","A#","B","C","C#","D","D#","E","F","F#"]);
+            case "G#":
+                return this.getVals(notes, ["G#","A","A#","B","C","C#","D","D#","E","F","F#","G"]);
             case 'B':
-                //return 'B,C,C#,D,D#,E,F,F#,G,G#,A,A#,B';
-                return [this.getVal(notes, "B"), 
-                this.getVal(notes, "C"),
-                this.getVal(notes, "C#"),
-                this.getVal(notes, "D"),
-                this.getVal(notes, "D#"),
-                this.getVal(notes, "E"),
-                this.getVal(notes, "F"),
-                this.getVal(notes, "F#"),
-                this.getVal(notes, "G"),
-                this.getVal(notes, "G#"),
-                this.getVal(notes, "A"),
-                this.getVal(notes, "A#")];
+                return this.getVals(notes, ["B","C","C#","D","D#","E","F","F#","G","G#","A","A#"]);
             default:
-                return 'n/a';
+                return [{"note": "invalid", "degree": "P1"}];
         }
     }
 
-    getVal(notes, note) {
+    getVals(notes, t_string) {
         let i = 0;
-        let result = 0;
+        let j = 0;
+        let result = [];
         for(i = 0; i < 12; i++) {
-            if (notes[i].note === note) {
-                result = notes[i].value;
+            for(j=0;j<12;j++) {
+                if (notes[j].note === t_string[i]) {
+                    result.push({"note": t_string[i], "degree": notes[j].value});
+                }
             }
         }
-        return {"note" : note , "degree" : result.toString(10)};
+        return result;
     }
 
     render() {

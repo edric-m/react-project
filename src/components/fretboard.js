@@ -5,7 +5,7 @@ class Fretboard extends React.Component {
     render() {
         return (
             <>
-            <h2>Fretboard</h2>
+            <h2>: Fretboard</h2>
             <div>
                 <String tuning={this.props.tuning[5]} keyNote={this.props.keyNote} scale={this.props.scale} />
             </div>
@@ -24,7 +24,7 @@ class Fretboard extends React.Component {
             <div>
                 <String tuning={this.props.tuning[0]} keyNote={this.props.keyNote} scale={this.props.scale} />
             </div>
-            <h2>Key: {this.props.keyNote}{this.props.scale}</h2>
+            <h4>Key: {this.props.keyNote}{this.props.scale}</h4>
             <String tuning="A" keyNote={this.props.keyNote} scale={this.props.scale} />
             </>
         );

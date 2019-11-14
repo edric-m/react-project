@@ -68,6 +68,11 @@ footer {
   padding-top: 10px;
 }
 
+/*-----------guitar---------------*/
+.guitar {
+  display: inline-flex;
+}
+
 /*----------- fretboard -------------*/
 .note {
   display: inline-block;
@@ -93,6 +98,13 @@ footer {
   padding: 10px;
   margin: 0px;
   min-width: 20px;
+}
+
+/*---------tunner-------------------*/
+.tunner input{
+  display: block;
+  margin: 20px;
+  width: 50px;
 }
 
 /*----------key selector ------------*/

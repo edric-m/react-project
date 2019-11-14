@@ -7,7 +7,7 @@ class HomePage extends React.Component {
         this.state = {
             chosenNote: "C",
             scaleType: "M",
-            tuning: "EADGBE"
+            tuning: ["E","A","D","G","B","E"]
         };
     }
 
@@ -23,10 +23,32 @@ class HomePage extends React.Component {
         this.setState({tuning: tuning});
     }
 
+    tuneString(stringNum, pitch) {
+        let result = this.state.tuning;
+        result[stringNum] = pitch.toUpperCase();
+        this.chooseTuning(result);
+    }
+
     render() {
         return (
             <> 
-            <Fretboard keyNote={this.state.chosenNote} scale={this.state.scaleType} tuning={this.state.tuning} />
+            <div className="guitar">
+                <div>
+                    <h2>Tunning   :</h2>
+                    <form className="tunner">
+                        <input type="text" onChange={(e) => this.tuneString(5, e.target.value)}/>
+                        <input type="text" onChange={(e) => this.tuneString(4, e.target.value)}/>
+                        <input type="text" onChange={(e) => this.tuneString(3, e.target.value)}/>
+                        <input type="text" onChange={(e) => this.tuneString(2, e.target.value)}/>
+                        <input type="text" onChange={(e) => this.tuneString(1, e.target.value)}/>
+                        <input type="text" onChange={(e) => this.tuneString(0, e.target.value)}/>
+                    </form>
+                </div>
+
+                <div>
+                    <Fretboard keyNote={this.state.chosenNote} scale={this.state.scaleType} tuning={this.state.tuning} />
+                </div>
+            </div>
 
             <p>Choose key:</p>
             <ul className="choose-key">
@@ -47,15 +69,16 @@ class HomePage extends React.Component {
                 <li onClick={(e) => (e)}>sharps #</li>
                 <li onClick={(e) => (e)}>flats b</li>
             </ul>
-            <p>Guitar tuning:</p>
+            
+            <p>Common tunings:</p>
             <ul className="choose-key">
-                <li onClick={(e) => this.chooseTuning("EADGBE")}>EADGBE</li>
-                <li onClick={(e) => this.chooseTuning("DADGBE")}>DADGBE</li>
-                <li onClick={(e) => this.chooseTuning("DADGBD")}>DADGBD</li>
-                <li onClick={(e) => this.chooseTuning("DADGAD")}>DADGAD</li>
-                <li onClick={(e) => this.chooseTuning("DGDGBD")}>DGDGBD</li>
-                <li onClick={(e) => this.chooseTuning("GGDGBD")}>GGDGBD</li>
-                <li onClick={(e) => this.chooseTuning("DADADD")}>DADADD</li>
+                <li onClick={(e) => this.chooseTuning(["E","A","D","G","B","E"])}>EADGBE</li>
+                <li onClick={(e) => this.chooseTuning(["D","A","D","G","B","E"])}>DADGBE</li>
+                <li onClick={(e) => this.chooseTuning(["D","A","D","G","B","D"])}>DADGBD</li>
+                <li onClick={(e) => this.chooseTuning(["D","A","D","G","A","D"])}>DADGAD</li>
+                <li onClick={(e) => this.chooseTuning(["D","G","D","G","B","D"])}>DGDGBD</li>
+                <li onClick={(e) => this.chooseTuning(["G","G","D","G","B","D"])}>GGDGBD</li>
+                <li onClick={(e) => this.chooseTuning(["D","A","D","A","D","D"])}>DADADD</li>
             </ul>
             </>
         )
