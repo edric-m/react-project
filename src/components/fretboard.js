@@ -1,8 +1,25 @@
 import React from 'react';
 import String from './string.js';
+import FretNumber from './fretNumber.js';
+
+const scale = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+const mode = {"lydian":7,"ionian":0,"mixolydian":5,"dorian":10,"aeolian":3,"phrygian":8,"locrian":1};
 
 class Fretboard extends React.Component {
+    findModeKeyIndex(length, begin, increment) {
+        if ( ( begin + increment) > length ) {
+            return begin - length + increment;
+        }
+        return begin + increment;
+    }
     render() {
+        let i = 0;
+        let pair;
+        for (i=0; i<12; i++) {
+            if (scale[i] === this.props.keyNote) {
+                pair = scale[this.findModeKeyIndex(12,i,mode[this.props.scale])];
+            }
+        }
         return (
             <>
             <h2>: Fretboard</h2>
@@ -24,8 +41,11 @@ class Fretboard extends React.Component {
             <div>
                 <String tuning={this.props.tuning[0]} keyNote={this.props.keyNote} scale={this.props.scale} />
             </div>
-            <h4>Key: {this.props.keyNote}{this.props.scale}</h4>
-            <String tuning="A" keyNote={this.props.keyNote} scale={this.props.scale} />
+            <div>
+                <FretNumber />
+            </div>
+            <h4>Mode: {this.props.keyNote} {this.props.scale}, {pair} major</h4>
+            <String tuning={this.props.keyNote} keyNote={this.props.keyNote} scale={this.props.scale} />
             </>
         );
     }

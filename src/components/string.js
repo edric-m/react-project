@@ -79,7 +79,7 @@ class String extends React.Component {
             case 'B':
                 return this.getVals(notes, ["B","C","C#","D","D#","E","F","F#","G","G#","A","A#"]);
             default:
-                return [{"note": "invalid", "degree": "P1"}];
+                return [{"note": "not set", "degree": "P1"}];
         }
     }
 

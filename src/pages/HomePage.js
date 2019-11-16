@@ -6,7 +6,7 @@ class HomePage extends React.Component {
         super(props);
         this.state = {
             chosenNote: "C",
-            scaleType: "M",
+            scaleType: "ionian",
             tuning: ["E","A","D","G","B","E"]
         };
     }
@@ -50,7 +50,7 @@ class HomePage extends React.Component {
                 </div>
             </div>
 
-            <p>Choose key:</p>
+            <p>Choose pitch:</p>
             <ul className="choose-key">
                 <li onClick={(e) => this.chooseKey("C")}>C</li>
                 <li onClick={(e) => this.chooseKey("C#")}>C#</li>
@@ -64,10 +64,20 @@ class HomePage extends React.Component {
                 <li onClick={(e) => this.chooseKey("A")}>A</li>
                 <li onClick={(e) => this.chooseKey("A#")}>A#</li>
                 <li onClick={(e) => this.chooseKey("B")}>B</li>
-                <li onClick={(e) => this.chooseScale("M")}>major</li>
-                <li onClick={(e) => this.chooseScale("m")}>minor</li>
+                
                 <li onClick={(e) => (e)}>sharps #</li>
                 <li onClick={(e) => (e)}>flats b</li>
+            </ul>
+
+            <p>Choose mode (ordered from brighter to darker sound): </p>
+            <ul className="choose-key">
+                <li onClick={(e) => this.chooseScale("lydian")}>lydian</li>
+                <li onClick={(e) => this.chooseScale("ionian")}>ionain(major)</li>
+                <li onClick={(e) => this.chooseScale("mixolydian")}>mixolydian</li>
+                <li onClick={(e) => this.chooseScale("dorian")}>dorian</li>
+                <li onClick={(e) => this.chooseScale("aeolian")}>aeolian(minor)</li>
+                <li onClick={(e) => this.chooseScale("phrygian")}>prygian</li>
+                <li onClick={(e) => this.chooseScale("locrian")}>locrian</li>
             </ul>
             
             <p>Common tunings:</p>
