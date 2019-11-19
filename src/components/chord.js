@@ -2,23 +2,18 @@ import React from 'react';
 
 //props: chord[], bassNote?
 
-//data: keys{}
+//data: keys{} 0 12 34 5 67 89 1011
 /*
-const keys = [
-    {"name" : "C" , "notes": ["C","D","E","F","G","A","B"]},
-    {"name" : "C#", "notes" : ["C#","D#","E","F#","G#","A#","C"]},
-    {"name" : "D" , "notes": ["D","E","F#","G","A","B","C#"]},
-    {"name" : "D#", "notes" : ["D#","F","G","G#","A#","C","D"]},
-    {"name" : "E" , "notes": ["E","F#","G#","A","B","C#","D#"]},
-    {"name" : "F" , "notes": ["F","G","A","A#","C","D","E"]},
-    {"name" : "F#", "notes" : ["F#","G#","A#","B","C#","D#","F"]},
-    {"name" : "G" , "notes": ["G","A","B","C","D","E","F#"]},
-    {"name" : "G#", "notes" : ["G#","A#","C","C#","D#","F","G"]},
-    {"name" : "A" , "notes": ["A","B","C#","D","E","F#","G#"]},
-    {"name" : "A#", "notes" : ["A#","C","D","D#","F","G","A",]},
-    {"name" : "B" , "notes": ["B","C#","D#","E","F#","G#","A#"]}
-];
-*/
+const chords = {
+    "maj" : [5, 7],
+    "min" : [4, 7],
+    "dim" : [4, 6],
+    "sus2"  : [3, 7],
+    "sus4"  : [6, 7],
+    "7" :  [5, 7, 11],
+    "ma7j"  : [5, 7, 12],
+    "min7"  : [4, 7, 11],
+};*/
 
 //const degrees = ["P1","m2","M2","m3","M3","P4","d5","P5","m6","M6","m7","M7"];
 
@@ -45,70 +40,64 @@ const orderNotes = (bassNote) => { //export to its own component, along with sam
             startVal = i;
         }
     }
-    let temp = 0;
+    let temp = [];
     for(i = 0; i < 12; i ++) { 
-        temp = notes[i].value - startVal;
-        if (temp < 1) {
-            notes[i].value = temp + 12;
-        } else {
-            notes[i].value = temp;
+        temp.push(notes[startVal + i]);
+        if (startVal + i === 11) {
+            startVal = -1 - i;
         }
     }
-
-    /*
-    for(i = 0; i < 12; i ++) {
-        switch(notes[i].value) {
-            case 1: notes[i].value = "P1"; break;
-            case 2: notes[i].value = "m2"; break;
-            case 3: notes[i].value = "M2"; break;
-            case 4: notes[i].value = "m3"; break;
-            case 5: notes[i].value = "M3"; break;
-            case 6: notes[i].value = "P4"; break;
-            case 7: notes[i].value = "d5"; break;
-            case 8: notes[i].value = "P5"; break;
-            case 9: notes[i].value = "m6"; break;
-            case 10: notes[i].value = "M6"; break;
-            case 11: notes[i].value = "m7"; break;
-            case 12: notes[i].value = "M7"; break;
-            default: break;
-        }
-    }*/
+    notes = temp;
+    
     return notes;
 }
 
 class ChordIdentifier extends React.Component {
     findChords(degrees, notes) {
-        let chords = "none";
+        let chords = "no chord found";
+        let bassNote = notes[0];
 
-        console.log(degrees);
-        console.log(notes);
+        if(notes.length > 4) {
+            return chords;
+        }
         
         //check invalid
         if((notes.includes(degrees[3].note) && notes.includes(degrees[4].note)) || (notes.includes(degrees[6].note) && notes.includes(degrees[7].note))) {
-            chords = "invalid";
             return chords;
         }
         //check major triad
         //M3, P5
         if(notes.includes(degrees[4].note) && notes.includes(degrees[7].note)) {
-            chords = "maj";
+            chords = bassNote + "maj";
+            if(notes.includes(degrees[11].note)) {
+                chords = bassNote + "maj7";
+            }
+            if(notes.includes(degrees[10].note)) {
+                chords = bassNote + "7";
+            }
+            return chords;
         }
         //check minor triad
         //m3, p5
         if(notes.includes(degrees[3].note) && notes.includes(degrees[7].note)) {
-            chords = "min";
+            if(notes.includes(degrees[10].note)) {
+                chords = bassNote + "min7";
+            } else {
+                chords = bassNote + "min";
+            }
+            return chords;
         }
         if(notes.includes(degrees[3].note) && notes.includes(degrees[6].note)) {
-            chords = "dim";
+            chords = bassNote + "dim";
         }
         if(notes.includes(degrees[4].note) && notes.includes(degrees[8].note)) {
-            chords = "aug";
+            chords = bassNote + "aug";
         }
         if(notes.includes(degrees[2].note) && notes.includes(degrees[7].note)) {
-            chords = "sus2";
+            chords = bassNote + "sus2";
         }
         if(notes.includes(degrees[5].note) && notes.includes(degrees[7].note)) {
-            chords = "sus4";
+            chords = bassNote + "sus4";
         }
         //check 6
 
@@ -127,7 +116,7 @@ class ChordIdentifier extends React.Component {
     }
     //return keys that fit the chord
     render() {
-        let degrees = orderNotes("G");
+        let degrees = orderNotes(this.props.notes[0]);
         let chord = this.findChords(degrees, this.props.notes);
         return (
             <>
