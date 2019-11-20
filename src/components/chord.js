@@ -57,6 +57,11 @@ class ChordIdentifier extends React.Component {
         let chords = "no chord found";
         let bassNote = notes[0];
 
+        //very incomplete - maj still not identified correctly, no inverted chords. 
+        //no 9th, 11, 13 identifier.
+        //needs to suggest scales
+        //needs to suggest partial matches and exact matches
+
         if(notes.length > 4) {
             return chords;
         }

@@ -74,6 +74,9 @@ footer {
 }
 
 /*----------- fretboard -------------*/
+.fretboard:hover {
+  cursor: pointer;
+}
 .note {
   display: inline-block;
   font-family: 'Courier New', Courier, monospace;
@@ -98,6 +101,11 @@ footer {
   padding: 10px;
   margin: 0px;
   min-width: 20px;
+}
+
+.selected-note {
+  color: blue;
+  font-weight: bold;
 }
 
 /*---------tunner-------------------*/

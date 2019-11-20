@@ -34,17 +34,8 @@ class HomePage extends React.Component {
         this.chooseTuning(result);
     }
 
-    chooseChord = (chordNote) => {
-        if (chordNote === "clear") {
-            this.setState({chord: []});
-            return;
-        }
-
-        if ( !this.state.chord.includes(chordNote) ) {
-            let temp = this.state.chord;
-            temp.push(chordNote);
-            this.setState({chord: temp});
-        }
+    chooseChord = (chordNotes) => {
+        this.setState({chord: chordNotes});
     }
 
     render() {
@@ -62,11 +53,13 @@ class HomePage extends React.Component {
                         <input type="text" onChange={(e) => this.tuneString(0, e.target.value)}/>
                     </form>
                 </div>
-
                 <div>
-                    <Fretboard keyNote={this.state.chosenNote} scale={this.state.scaleType} tuning={this.state.tuning} />
+                    <Fretboard chooseNote={this.chooseChord} keyNote={this.state.chosenNote} scale={this.state.scaleType} tuning={this.state.tuning} />
                 </div>
             </div>
+
+            <h4><Chord notes={this.state.chord} /></h4>
+            <p>{this.state.chord.toString()}</p>
 
             <p>Choose pitch:</p>
             <ul className="choose-key">
@@ -97,24 +90,6 @@ class HomePage extends React.Component {
                 <li onClick={(e) => this.chooseScale("phrygian")}>prygian</li>
                 <li onClick={(e) => this.chooseScale("locrian")}>locrian</li>
             </ul>
-
-            <p>Choose chord:</p>
-            <ul className="choose-key">
-                <li onClick={(e) => this.chooseChord("C")}>C</li>
-                <li onClick={(e) => this.chooseChord("C#")}>C#</li>
-                <li onClick={(e) => this.chooseChord("D")}>D</li>
-                <li onClick={(e) => this.chooseChord("D#")}>D#</li>
-                <li onClick={(e) => this.chooseChord("E")}>E</li>
-                <li onClick={(e) => this.chooseChord("F")}>F</li>
-                <li onClick={(e) => this.chooseChord("F#")}>F#</li>
-                <li onClick={(e) => this.chooseChord("G")}>G</li>
-                <li onClick={(e) => this.chooseChord("G#")}>G#</li>
-                <li onClick={(e) => this.chooseChord("A")}>A</li>
-                <li onClick={(e) => this.chooseChord("A#")}>A#</li>
-                <li onClick={(e) => this.chooseChord("B")}>B</li>
-                <li onClick={(e) => this.chooseChord("clear")}>clear</li>
-            </ul>
-            <Chord notes={this.state.chord} />
             
             <p>Common tunings:</p>
             <ul className="choose-key">
