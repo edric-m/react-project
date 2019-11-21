@@ -1,6 +1,7 @@
 import React from 'react';
 import Fretboard from '../components/fretboard.js';
 import Chord from '../components/chord.js';
+import AudioIn from '../components/audioIn.js';
 
 //https://www.tutorialspoint.com/webrtc/webrtc_media_stream_apis.htm - audio stream capture
 //https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm - fft algorithm
@@ -41,6 +42,7 @@ class HomePage extends React.Component {
     render() {
         return (
             <> 
+            <AudioIn />
             <div className="guitar">
                 <div>
                     <h2>Tunning   :</h2>
@@ -102,6 +104,8 @@ class HomePage extends React.Component {
                 <li onClick={(e) => this.chooseTuning(["D","A","D","A","D","D"])}>DADADD</li>
             </ul>
             </>
+
+
         )
     }
 }
