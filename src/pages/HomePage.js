@@ -43,6 +43,7 @@ class HomePage extends React.Component {
         return (
             <> 
             <AudioIn />
+            
             <div className="guitar">
                 <div>
                     <h2>Tunning   :</h2>
