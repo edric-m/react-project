@@ -2,6 +2,8 @@ import React from 'react';
 
 let recorder; //recordButton, stopButton, 
 let recordedChunks = [];
+const recordingTime = 8000;
+const logWaitTime = 500;
 
 const notes = [
     {note : "C" , freq : 16.35},//32.7032},
@@ -18,11 +20,29 @@ const notes = [
     {note : "B", freq : 30.87}//61.7354}
 ];
 
+function recordingReady(e) {
+    if (e.data.size > 0) {
+        recordedChunks.push(e.data);
+    } else {
+    // ...
+    }
+}
+
+navigator.mediaDevices.getUserMedia({
+    audio: true, video: false
+  })
+  .then(function (stream) {
+    recorder = new MediaRecorder(stream);
+    recorder.ondataavailable = recordingReady;
+    // listen to dataavailable, which gets triggered whenever we have
+    // an audio blob available
+});
+
 class AudioIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            identifiedNotes: []
+            results: []
         };
     }
 
@@ -47,13 +67,18 @@ class AudioIn extends React.Component {
     }
     dft(x) {
         let returnList = [];
+        let avg = 0;
+        let sum = 0;
 
         for(let i = 0; i < notes.length; i++) {
             let weight = this.addHarmonics(x, notes[i].freq);
             let note = notes[i].note;
+            sum += weight;
             returnList.push({ note, weight });
         }
 
+        avg = sum / 12;
+        returnList.push(avg); //just return top 4
         return returnList;
     }
 
@@ -63,8 +88,6 @@ class AudioIn extends React.Component {
         let decodedAudio = [];
         let freq = [];
 
-        //console.log(recordedChunks);
-
         audioData = await new Response(superBuffer).arrayBuffer();
         //audioData = new Uint8Array(audioData);
 
@@ -72,13 +95,18 @@ class AudioIn extends React.Component {
         decodedAudio = await ctx.decodeAudioData(audioData);
 
         decodedAudio = decodedAudio.getChannelData(0);
-        //console.log(decodedAudio);
 
-        console.log("analysing...");
         freq = this.dft(decodedAudio);
         console.log(freq);
 
-        //this.setState({identifiedNotes : freq});
+        let strongestNotes = [];
+        for ( let i = 0; i < 12; i++ ) {
+            if ( freq[i].weight > freq[12] ) {
+                strongestNotes.push(freq[i].note);
+            }
+        }
+
+        this.setState({results : JSON.stringify(strongestNotes)});
 
         //clear recorded audio for reuse
         recordedChunks = [];
@@ -86,37 +114,26 @@ class AudioIn extends React.Component {
 
     record() {
         recorder.start();
-        console.log("recording...");
-            setTimeout(() => {
-                recorder.stop();
-                console.log("recording finished!");
-            }, 8000);
+        setTimeout(() => {
+            recorder.stop();
+        }, recordingTime);
+    }
+
+    listen() {
+        this.setState({results : "recording..."});
+        this.record();
+        
+        setTimeout(() => {
+            this.setState({results : "processing..."});
+            this.logStream();
+        }, recordingTime + logWaitTime);
     }
 
     render() {
-        function recordingReady(e) {
-            if (e.data.size > 0) {
-                recordedChunks.push(e.data);
-            } else {
-            // ...
-            }
-        }
-
-        navigator.mediaDevices.getUserMedia({
-            audio: true, video: false
-          })
-          .then(function (stream) {
-            recorder = new MediaRecorder(stream);
-            recorder.ondataavailable = recordingReady;
-            // listen to dataavailable, which gets triggered whenever we have
-            // an audio blob available
-        });
-
         return (
             <>
-            <audio autoPlay></audio>
-            <button onClick={(e) => this.logStream()}>log stream</button>
-            <button onClick={(e) => this.record()}>record</button>
+            <button onClick={(e) => this.listen()}>record</button>
+            <p>{this.state.results}</p>
             </>
         );
     }
