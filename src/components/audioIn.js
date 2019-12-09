@@ -23,6 +23,12 @@ const notes = [
 function recordingReady(e) {
     if (e.data.size > 0) {
         recordedChunks.push(e.data);
+
+        //if chunks at limit pop last element
+
+        //analyse set
+
+        //tally notes
     } else {
     // ...
     }
