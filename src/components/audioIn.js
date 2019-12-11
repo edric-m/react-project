@@ -1,34 +1,14 @@
 import React from 'react';
+import Worker from 'worker-loader!./findNote.js';
 
 let recorder; //recordButton, stopButton, 
 let recordedChunks = [];
-const recordingTime = 8000;
-const logWaitTime = 500;
-
-const notes = [
-    {note : "C" , freq : 16.35},//32.7032},
-    {note : "C#", freq : 17.32},//34.6478},
-    {note : "D", freq : 18.35},//36.7081},
-    {note : "D#", freq : 19.45},//38.8909},
-    {note : "E", freq : 20.6},//41.2034},
-    {note : "F", freq : 21.83},//43.6535},
-    {note : "F#", freq : 23.12},//46.2493},
-    {note : "G", freq : 24.5},//48.9994},
-    {note : "G#", freq : 25.96},//51.9131},
-    {note : "A" , freq : 27.5},//55},
-    {note : "A#", freq : 29.14},//58.2705},
-    {note : "B", freq : 30.87}//61.7354}
-];
+const recordingTime = 1000; //every second
+//const worker;
 
 function recordingReady(e) {
     if (e.data.size > 0) {
         recordedChunks.push(e.data);
-
-        //if chunks at limit pop last element
-
-        //analyse set
-
-        //tally notes
     } else {
     // ...
     }
@@ -48,91 +28,46 @@ class AudioIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            results: []
+            recording : false,
+            results : []
         };
     }
 
-    addHarmonics (x, freq) {
-        let N = x.length;
-        let total = 0;
-
-        for (let k = 1; (k * freq) < N; k*=2) {
-            let re = 0;
-            let im = 0;
-            for (let n = 0; n < N; n++) {
-                const angle = (Math.PI * 2 * freq * k * n) / N;
-                re += x[n] * Math.cos(angle);
-                im -= x[n] * Math.sin(angle);
+    setUpWorker() {
+        if (window.Worker) {
+            const worker = new Worker();
+            worker.onmessage =  e => {
+                //get data from worker
+                console.log(e.data);
+                //this.setState({results : JSON.stringify(e.data)});
             }
-            //let amp = (Math.sqrt(Math.pow(re,2) + Math.pow(im, 2)) * 2) / N;
-            let pwr = (Math.pow(re,2) + Math.pow(im,2)) / N; //may be better to determine based on power
-            //maybe use a combination of amp and pwr
-            total += pwr;
+            worker.postMessage("Hello");
+        } else {
+            console.log("no worker support");
         }
-        return total;
-    }
-    dft(x) {
-        let returnList = [];
-        let avg = 0;
-        let sum = 0;
-
-        for(let i = 0; i < notes.length; i++) {
-            let weight = this.addHarmonics(x, notes[i].freq);
-            let note = notes[i].note;
-            sum += weight;
-            returnList.push({ note, weight });
-        }
-
-        avg = sum / 12;
-        returnList.push(avg); //just return top 4
-        return returnList;
-    }
-
-    async logStream() {
-        let superBuffer = new Blob(recordedChunks);
-        let audioData = [];
-        let decodedAudio = [];
-        let freq = [];
-
-        audioData = await new Response(superBuffer).arrayBuffer();
-        //audioData = new Uint8Array(audioData);
-
-        let ctx = new (window.AudioContext || window.webkitAudioContext)();
-        decodedAudio = await ctx.decodeAudioData(audioData);
-
-        decodedAudio = decodedAudio.getChannelData(0);
-
-        freq = this.dft(decodedAudio);
-        console.log(freq);
-
-        let strongestNotes = [];
-        for ( let i = 0; i < 12; i++ ) {
-            if ( freq[i].weight > freq[12] ) {
-                strongestNotes.push(freq[i].note);
-            }
-        }
-
-        this.setState({results : JSON.stringify(strongestNotes)});
-
-        //clear recorded audio for reuse
-        recordedChunks = [];
-    }
-
-    record() {
-        recorder.start();
-        setTimeout(() => {
-            recorder.stop();
-        }, recordingTime);
     }
 
     listen() {
-        this.setState({results : "recording..."});
-        this.record();
-        
-        setTimeout(() => {
-            this.setState({results : "processing..."});
-            this.logStream();
-        }, recordingTime + logWaitTime);
+        //toggle recording state
+        let temp = !this.state.recording;
+        this.setState({recording : temp});
+
+        if (temp) {
+            console.log("start");
+            recorder.start();
+
+            this.setUpWorker();
+
+            setTimeout(() => {
+                recorder.requestData(); //calls recording ready every second
+                //worker.postMessage("hello"); //send audio data to worker
+                recordedChunks = [];
+            }, recordingTime);
+        } else {
+            console.log("end");
+            recorder.stop();
+            //worker.terminate();
+        }
     }
 
     render() {
