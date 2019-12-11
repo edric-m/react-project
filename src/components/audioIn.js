@@ -1,10 +1,10 @@
 import React from 'react';
-import Worker from 'worker-loader!./findNote.js';
+import Worker from './findNote.worker.js';
 
 let recorder; //recordButton, stopButton, 
 let recordedChunks = [];
 const recordingTime = 1000; //every second
-//const worker;
+const worker = new Worker();
 
 function recordingReady(e) {
     if (e.data.size > 0) {
@@ -35,7 +35,7 @@ class AudioIn extends React.Component {
 
     setUpWorker() {
         if (window.Worker) {
-            const worker = new Worker();
+            //worker = new Worker();
             worker.onmessage =  e => {
                 //get data from worker
                 console.log(e.data);
