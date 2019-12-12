@@ -1,4 +1,3 @@
-/*
 let notes = [
     {note : "C" , freq : 16.35, powerTotal : 0},//32.7032},
     {note : "C#", freq : 17.32, powerTotal : 0},//34.6478},
@@ -15,27 +14,17 @@ let notes = [
 ];
 
 let bufferPos = 0;
-let bufferSize = 400000; //400000 -size from testing
-*/
+const bufferSize = 400000; //400000 -size from testing
+
 self.addEventListener('message', e => { 
     //will it wait for the previous chunk to be calculated 
     //before starting work on the new chunk?
-    postMessage(e.data + " to you too");
-    //let noteWeights = FindNote( e.data );
-    //self.postMessage(noteWeights);
+    let noteWeights = FindNote( e.data );
+    postMessage(noteWeights);
 });
 
-/*
-const FindNote = ( chunk ) => {
-    //create new blob? ---------------------------------TODO:
-    //transform to arraybuffer
-    //decodeaudiodata()
-    //getchannel 0
-    let superBuffer = new Blob(chunk);
-    let audioData = await new Response(superBuffer).arrayBuffer();
-    let ctx = new (window.AudioContext || window.webkitAudioContext)();
-    let decodedAudio = await ctx.decodeAudioData(audioData);
 
+const FindNote = ( decodedAudio ) => {
     for ( let i = 0; i < 12; i++ ) {
         let re = 0; //these two should be a running total
         let im = 0;
@@ -56,7 +45,6 @@ const FindNote = ( chunk ) => {
     }
     
     //for audio chunk 
-    console.log("end calc");
     return notes; //maybe remove frequencies from object
 }
 

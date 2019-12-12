@@ -5,8 +5,10 @@ let recorder; //recordButton, stopButton,
 let recordedChunks = [];
 const recordingTime = 1000; //every second
 const worker = new Worker();
+let createClock;
 
 function recordingReady(e) {
+    
     if (e.data.size > 0) {
         recordedChunks.push(e.data);
     } else {
@@ -41,10 +43,27 @@ class AudioIn extends React.Component {
                 console.log(e.data);
                 //this.setState({results : JSON.stringify(e.data)});
             }
-            worker.postMessage("Hello");
         } else {
             console.log("no worker support");
         }
+    }
+
+    async messageWorker() { //does this method need to be async?
+        
+
+        recorder.requestData(); //calls recording ready every second
+        
+        setTimeout(async() => {
+            let superBuffer = new Blob(recordedChunks);
+            let audioData = await new Response(superBuffer).arrayBuffer();
+            
+            let ctx = new (window.AudioContext || window.webkitAudioContext)();
+            let decodedAudio = await ctx.decodeAudioData(audioData);
+            decodedAudio = decodedAudio.getChannelData(0);
+            console.log(decodedAudio);
+            worker.postMessage(decodedAudio); //send audio data to worker
+            recordedChunks = [];
+        }, recordingTime + 10);
     }
 
     listen() {
@@ -55,18 +74,13 @@ class AudioIn extends React.Component {
         if (temp) {
             console.log("start");
             recorder.start();
-
             this.setUpWorker();
-
-            setTimeout(() => {
-                recorder.requestData(); //calls recording ready every second
-                //worker.postMessage("hello"); //send audio data to worker
-                recordedChunks = [];
-            }, recordingTime);
+            createClock = setInterval(this.messageWorker, recordingTime);
         } else {
             console.log("end");
             recorder.stop();
-            //worker.terminate();
+            worker.terminate();
+            clearInterval(createClock);
         }
     }
 
