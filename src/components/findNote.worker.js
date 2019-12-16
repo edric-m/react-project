@@ -19,12 +19,26 @@ const bufferSize = 400000; //400000 -size from testing
 self.addEventListener('message', e => { 
     //will it wait for the previous chunk to be calculated 
     //before starting work on the new chunk?
-    let noteWeights = FindNote( e.data );
-    postMessage(noteWeights);
+
+    //let noteWeights = FindNote( e.data );
+
+    //will the messages queue up? --------------------<<<<TODO:
+
+    let ctx = new (window.AudioContext || window.webkitAudioContext)(); 
+    let decodedAudio = await ctx.decodeAudioData(audioData);
+    decodedAudio = decodedAudio.getChannelData(0);
+
+    if (decodedAudio.length > 0) {
+        postMessage(decodedAudio);//noteWeights);
+    }
 });
 
+const decode = () => {
+    return 0;
+}
 
 const FindNote = ( decodedAudio ) => {
+    let result = [];
     for ( let i = 0; i < 12; i++ ) {
         let re = 0; //these two should be a running total
         let im = 0;
@@ -41,11 +55,12 @@ const FindNote = ( decodedAudio ) => {
         }
         //calculate power for this note, then append it to the return variable
         let pwr = (Math.pow(re,2) + Math.pow(im,2)) / N;
-        notes[i].powerTotal += pwr; //TODO: change to return only note with weight
+        let tempNote = notes[i].note;
+        result.push({tempNote,  pwr}); //TODO: change to return only note with weight
     }
     
     //for audio chunk 
-    return notes; //maybe remove frequencies from object
+    return result; //maybe remove frequencies from object
 }
 
 /*

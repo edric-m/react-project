@@ -48,22 +48,21 @@ class AudioIn extends React.Component {
         }
     }
 
-    async messageWorker() { //does this method need to be async?
+    messageWorker() { //does this method need to be async?
         
 
-        recorder.requestData(); //calls recording ready every second
+        recorder.requestData(); //calls recordingReady every second
         
         setTimeout(async() => {
             let superBuffer = new Blob(recordedChunks);
-            let audioData = await new Response(superBuffer).arrayBuffer();
-            
-            let ctx = new (window.AudioContext || window.webkitAudioContext)();
-            let decodedAudio = await ctx.decodeAudioData(audioData);
-            decodedAudio = decodedAudio.getChannelData(0);
-            console.log(decodedAudio);
-            worker.postMessage(decodedAudio); //send audio data to worker
+            let audioData = await new Response(superBuffer).arrayBuffer(); 
+            //let ctx = new (window.AudioContext || window.webkitAudioContext)(); 
+            //let decodedAudio = await ctx.decodeAudioData(audioData);
+            //decodedAudio = decodedAudio.getChannelData(0);
+            console.log(audioData);
+            worker.postMessage(audioData, [audioData]); //send audio data to worker
             recordedChunks = [];
-        }, recordingTime + 10);
+        }, 10);
     }
 
     listen() {
