@@ -1,11 +1,13 @@
 import React from 'react';
 
+
 let recorder; //recordButton, stopButton, 
 let recordedChunks = [];
 const recordingTime = 1000; //every second
-let clock;
+let clockGetData, clockProcessData;
 let bufferSize = 400000;
 let bufferPos = 0;
+let canProcess = true;
 let notes = [
     {note : "C" , freq : 16.35, powerTotal : 0},//32.7032},
     {note : "C#", freq : 17.32, powerTotal : 0},//34.6478},
@@ -23,6 +25,7 @@ let notes = [
 
 function recordingReady(e) {
     if (e.data.size > 0) {
+        //do not push if index > 8
         recordedChunks.push(e.data);
     } else {
     // ...
@@ -39,6 +42,33 @@ navigator.mediaDevices.getUserMedia({
     // an audio blob available
 });
 
+async function loadAudio() {
+    let result = [];
+    let ctx = new (window.AudioContext || window.webkitAudioContext)();
+    //let oldestChunk = recordedChunks[0];
+    //let superBuffer = new Blob(oldestChunk);
+    try {
+        
+        let getOldestChunk = await recordedChunks[0].arrayBuffer().then((result) => {
+            console.log("-----removed-----");
+            console.log(recordedChunks.splice(0,1)); //remove oldest chunk
+            return result;
+        });
+        console.log("-----oldest chunk-----");
+        console.log(getOldestChunk);
+        
+        result = await ctx.decodeAudioData(getOldestChunk).then((newResult) => {
+            return newResult.getChannelData(0);
+        });
+        
+            
+        
+    } catch(err) {
+        console.log("error", err.message);
+    }
+    return result;
+}
+
 class AudioIn extends React.Component {
     constructor(props) {
         super(props);
@@ -48,25 +78,36 @@ class AudioIn extends React.Component {
         };
     }
 
-    async processData() {
-        recorder.requestData();
-        let superBuffer = new Blob(recordedChunks);
-        let audioData = await new Response(superBuffer).arrayBuffer();
-        let ctx = new (window.AudioContext || window.webkitAudioContext)();
-        let decodedAudio = await ctx.decodeAudioData(audioData);
-        decodedAudio = decodedAudio.getChannelData(0);
-
-        result = await findNotePromise(decodedAudio);
-
-        console.log(result);
-        //this.setState({results : result});
+    getData() {
+        //recorder.requestData(); //doesnt work?
+        recorder.stop();
+        recorder.start();
+        //canProcess = true;
     }
 
-    findNotePromise(decodedAudio) {
+    async processData() {
+        
+        if(canProcess) {
+            canProcess = false;
+            let decodedAudio = await loadAudio();
+            //apply dft
+            //...
+            //...
+            canProcess = true;
+        }
+        
+        //let result = await this.findNotePromise(decodedAudio);
+
+        //this.setState({results : result});
+        
+    }
+
+    findNotePromise() {
         return new Promise(resolve => {
             let result = [];
+            
 
-            result = this.FindNote(decodedAudio);
+            //result = this.FindNote(decodedAudio);
 
             resolve(result);
         });
@@ -81,10 +122,11 @@ class AudioIn extends React.Component {
             for ( let k = 1; k < 128; k*=2 ) {
                 for ( let n = 0; n < chunk.length; n++) {
                     bufferPos += n;
-                    if (bufferPos === buffersize) {
+                    if (bufferPos === bufferSize) {
                         bufferPos = 0;
                     } 
-                    const angle = (Math.PI * 2 * notes[i].freq * k * bufferPos) / bufferSize; //n is buffer que position, N is buffer size
+                    const angle = (Math.PI * 2 * notes[i].freq * k * bufferPos) / bufferSize; 
+                    //n is buffer que position, N is buffer size
                     re += chunk[n] * Math.cos(angle);
                     im -= chunk[n] * Math.sin(angle);
                 }
@@ -107,11 +149,14 @@ class AudioIn extends React.Component {
         if (temp) {
             console.log("start");
             recorder.start();
-            clock = setInterval(this.processData, recordingTime);
+            clockGetData = setInterval(this.getData, recordingTime);
+            clockProcessData = setInterval(this.processData, recordingTime+1);
         } else {
             console.log("end");
             recorder.stop();
-            clearInterval(clock);
+            clearInterval(clockGetData);
+            clearInterval(clockProcessData);
+            recordedChunks = [];
         }
     }
 
