@@ -27,6 +27,9 @@ function recordingReady(e) {
     if (e.data.size > 0) {
         //do not push if index > 8
         recordedChunks.push(e.data);
+        console.log("-----added-----");
+        console.log(e.data); //remove oldest chunk
+        console.log("count: ", recordedChunks.length);
     } else {
     // ...
     }
@@ -45,17 +48,14 @@ navigator.mediaDevices.getUserMedia({
 async function loadAudio() {
     let result = [];
     let ctx = new (window.AudioContext || window.webkitAudioContext)();
-    //let oldestChunk = recordedChunks[0];
-    //let superBuffer = new Blob(oldestChunk);
     try {
         
         let getOldestChunk = await recordedChunks[0].arrayBuffer().then((result) => {
             console.log("-----removed-----");
             console.log(recordedChunks.splice(0,1)); //remove oldest chunk
+            console.log("count: ", recordedChunks.length);
             return result;
         });
-        console.log("-----oldest chunk-----");
-        console.log(getOldestChunk);
         
         result = await ctx.decodeAudioData(getOldestChunk).then((newResult) => {
             return newResult.getChannelData(0);
@@ -67,6 +67,46 @@ async function loadAudio() {
         console.log("error", err.message);
     }
     return result;
+}
+
+function findNotePromise(decodedAudio) {
+    return new Promise((resolve, reject) => {
+        let result = [];
+        try {
+            result = FindNote(decodedAudio);
+            resolve(result);
+        } catch (e) {
+            reject(Error(e.message));
+        }
+    });
+}
+
+function FindNote ( chunk ) {
+    let result = [];
+
+    for ( let i = 0; i < 12; i++ ) {
+        let re = 0; //these two should be a running total
+        let im = 0;
+        for ( let k = 1; k < 128; k*=2 ) {
+            for ( let n = 0; n < chunk.length; n++) {
+                bufferPos += n;
+                if (bufferPos === bufferSize) {
+                    bufferPos = 0;
+                } 
+                const angle = (Math.PI * 2 * notes[i].freq * k * bufferPos) / bufferSize; 
+                //n is buffer que position, N is buffer size
+                re += chunk[n] * Math.cos(angle);
+                im -= chunk[n] * Math.sin(angle);
+            }
+        }
+        //calculate power for this note, then append it to the return variable
+        let pwr = (Math.pow(re,2) + Math.pow(im,2)) / bufferSize;
+        let tempNote = notes[i].note;
+        result.push({tempNote,pwr});
+    }
+    
+    //for audio chunk 
+    return result; //maybe remove frequencies from object
 }
 
 class AudioIn extends React.Component {
@@ -91,55 +131,19 @@ class AudioIn extends React.Component {
             canProcess = false;
             let decodedAudio = await loadAudio();
             //apply dft
-            //...
-            //...
+            let result = await findNotePromise(decodedAudio);
+            console.log("-------dft--------");
+            console.log(result);
             canProcess = true;
         }
         
-        //let result = await this.findNotePromise(decodedAudio);
+        
 
         //this.setState({results : result});
         
     }
 
-    findNotePromise() {
-        return new Promise(resolve => {
-            let result = [];
-            
-
-            //result = this.FindNote(decodedAudio);
-
-            resolve(result);
-        });
-    }
-
-    FindNote = ( chunk ) => {
-        let result = [];
-
-        for ( let i = 0; i < 12; i++ ) {
-            let re = 0; //these two should be a running total
-            let im = 0;
-            for ( let k = 1; k < 128; k*=2 ) {
-                for ( let n = 0; n < chunk.length; n++) {
-                    bufferPos += n;
-                    if (bufferPos === bufferSize) {
-                        bufferPos = 0;
-                    } 
-                    const angle = (Math.PI * 2 * notes[i].freq * k * bufferPos) / bufferSize; 
-                    //n is buffer que position, N is buffer size
-                    re += chunk[n] * Math.cos(angle);
-                    im -= chunk[n] * Math.sin(angle);
-                }
-            }
-            //calculate power for this note, then append it to the return variable
-            let pwr = (Math.pow(re,2) + Math.pow(im,2)) / bufferSize;
-            let tempNote = notes[i].note;
-            result.push({tempNote,pwr});
-        }
-        
-        //for audio chunk 
-        return result; //maybe remove frequencies from object
-    }
+    
 
     listen() {
         //toggle recording state
