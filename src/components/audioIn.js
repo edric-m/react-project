@@ -3,7 +3,7 @@ import React from 'react';
 
 let recorder; //recordButton, stopButton, 
 let recordedChunks = [];
-const recordingTime = 150; //every half second
+const recordingTime = 150; //every half second //try reducing even more
 let clockGetData, clockProcessData;
 let bufferSize = 400000;
 let bufferPos = 0;
@@ -74,33 +74,28 @@ async function FindNote ( chunk, i ) {
     //let result = [];
     //for ( let i = 0; i < 12; i++ ) {\
     //console.log(chunk.length);
-    if ( chunk.length < 23041) {
-        let re = 0; //these two should be a running total
-        let im = 0;
-        for ( let k = 1; k < 128; k*=2 ) {
-            for ( let n = 0; n < chunk.length; n++) {
-                bufferPos += n;
-                if (bufferPos === bufferSize) {
-                    bufferPos = 0;
-                } 
-                let angle = (Math.PI * 2 * notes[i].freq * k * bufferPos) / bufferSize; 
-                //n is buffer que position, N is buffer size
-                re += chunk[n] * Math.cos(angle);
-                im -= chunk[n] * Math.sin(angle);
-            }
+    let re = 0; //these two should be a running total
+    let im = 0;
+    for ( let k = 1; k < 128; k*=2 ) {
+        for ( let n = 0; n < chunk.length; n++) {
+            bufferPos += n;
+            if (bufferPos === bufferSize) {
+                bufferPos = 0;
+            } 
+            let angle = (Math.PI * 2 * notes[i].freq * k * bufferPos) / bufferSize; 
+            //n is buffer que position, N is buffer size
+            re += chunk[n] * Math.cos(angle);
+            im -= chunk[n] * Math.sin(angle);
         }
-        //calculate power for this note, then append it to the return variable
-        let pwr = (Math.pow(re,2) + Math.pow(im,2)) / bufferSize;
-        let tempNote = notes[i].note;
-        //result.push({tempNote,pwr});
-        return {tempNote, pwr};
-    //}
-    } else {
-        //recordedChunks.splice(0,1);
-        let tempNote = notes[i].note;
-        let pwr = 0;
-        return {tempNote, pwr};
     }
+    //calculate power for this note, then append it to the return variable
+    let pwr = (Math.pow(re,2) + Math.pow(im,2)) / bufferSize;
+    //let tempNote = notes[i].note;
+    //result.push({tempNote,pwr});
+    notes[i].powerTotal += pwr;
+    //return {tempNote, pwr};
+    //}
+    
     
     //for audio chunk 
     //return result; //maybe remove frequencies from object
@@ -128,17 +123,22 @@ class AudioIn extends React.Component {
             canProcess = false;
             let decodedAudio = await loadAudio();
             //apply dft
-            let result = [];// = await FindNote(decodedAudio);
-            for (let i = 0; i < 12; i++) {
-                let temp = await FindNote(decodedAudio, i);
-                try{
-                    result.push(temp);
-                }catch(e) {
-                    console.log("error", e.message);
+            //let result = [];// = await FindNote(decodedAudio);
+            if ( decodedAudio.length < 25000) {
+                for (let i = 0; i < 12; i++) {
+                    //let temp = await FindNote(decodedAudio, i);
+                    try{
+                        await FindNote(decodedAudio, i);
+                        //result.push(temp);
+                    }catch(e) {
+                        console.log("error", e.message);
+                    }
                 }
+            } else {
+                console.log("skipped");
             }
             console.log("-------dft--------");
-            console.log(result);
+            console.log(notes);
             canProcess = true;
         }
 
