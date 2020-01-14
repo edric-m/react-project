@@ -3,7 +3,7 @@ import React from 'react';
 
 let recorder; //recordButton, stopButton, 
 let recordedChunks = [];
-const recordingTime = 150; //every half second //try reducing even more
+const recordingTime = 100; //every half second //try reducing even more
 let clockGetData, clockProcessData;
 let bufferSize = 400000;
 let bufferPos = 0;
@@ -78,7 +78,7 @@ async function FindNote ( chunk, i ) {
     let im = 0;
     for ( let k = 1; k < 128; k*=2 ) {
         for ( let n = 0; n < chunk.length; n++) {
-            bufferPos += n;
+            bufferPos ++;
             if (bufferPos === bufferSize) {
                 bufferPos = 0;
             } 
@@ -108,6 +108,26 @@ class AudioIn extends React.Component {
             recording : false,
             results : []
         };
+    }
+
+    displayNotes(display) {
+        if(display) {
+            let max = 0;
+            let maxIdx;
+            try {
+                for (let i = 0; i < 12; i++ ) {
+                    if(notes[i].powerTotal > max) {
+                        max = notes[i].powerTotal;
+                        maxIdx = i;
+                    }
+                }
+                this.setState({results : JSON.stringify(notes[maxIdx])}); 
+            } catch (e) {
+                console.log("error", e.message);
+            }
+        } else {
+            this.setState({results : []});
+        }
     }
 
     getData() {
@@ -140,9 +160,7 @@ class AudioIn extends React.Component {
             console.log("-------dft--------");
             console.log(notes);
             canProcess = true;
-        }
-
-        //this.setState({results : result}); 
+        }  
     }
 
     listen() {
@@ -152,15 +170,32 @@ class AudioIn extends React.Component {
 
         if (temp) {
             console.log("start");
+            this.displayNotes(false);
             recorder.start();
-            clockGetData = setInterval(this.getData, recordingTime);
+            clockGetData = setInterval(this.getData, recordingTime); //put these timer variables inside the component
             clockProcessData = setInterval(this.processData, recordingTime+1);
         } else {
             console.log("end");
             recorder.stop();
             clearInterval(clockGetData);
             clearInterval(clockProcessData);
+            this.displayNotes(true);
+            bufferPos = 0;
             recordedChunks = [];
+            notes = [
+                {note : "C" , freq : 16.35, powerTotal : 0},//32.7032},
+                {note : "C#", freq : 17.32, powerTotal : 0},//34.6478},
+                {note : "D", freq : 18.35, powerTotal : 0},//36.7081},
+                {note : "D#", freq : 19.45, powerTotal : 0},//38.8909},
+                {note : "E", freq : 20.6, powerTotal : 0},//41.2034},
+                {note : "F", freq : 21.83, powerTotal : 0},//43.6535},
+                {note : "F#", freq : 23.12, powerTotal : 0},//46.2493},
+                {note : "G", freq : 24.5, powerTotal : 0},//48.9994},
+                {note : "G#", freq : 25.96, powerTotal : 0},//51.9131},
+                {note : "A" , freq : 27.5, powerTotal : 0},//55},
+                {note : "A#", freq : 29.14, powerTotal : 0},//58.2705},
+                {note : "B", freq : 30.87, powerTotal : 0}//61.7354}
+            ];
         }
     }
 
