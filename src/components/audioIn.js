@@ -5,7 +5,7 @@ let recorder; //recordButton, stopButton,
 let recordedChunks = [];
 const recordingTime = 100; //every half second //try reducing even more
 let clockGetData, clockProcessData;
-let bufferSize = 400000;
+let bufferSize = 380000;//best value 380000;
 let bufferPos = 0;
 let canProcess = true;
 let notes = [
