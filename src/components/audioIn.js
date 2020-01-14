@@ -1,11 +1,12 @@
 import React from 'react';
 
+//TODO : reduce the number of loops for efficiency
 
 let recorder; //recordButton, stopButton, 
 let recordedChunks = [];
 const recordingTime = 100; //every half second //try reducing even more
 let clockGetData, clockProcessData;
-let bufferSize = 380000;//best value 380000;
+let bufferSize = 380000;//best value 380000 why?;
 let bufferPos = 0;
 let canProcess = true;
 let notes = [
@@ -70,7 +71,7 @@ async function loadAudio() {
 }
 
 //TODO: try dividing up this function
-async function FindNote ( chunk, i ) {
+async function FindPowerOfNote ( chunk, i ) {
     //let result = [];
     //for ( let i = 0; i < 12; i++ ) {\
     //console.log(chunk.length);
@@ -143,12 +144,12 @@ class AudioIn extends React.Component {
             canProcess = false;
             let decodedAudio = await loadAudio();
             //apply dft
-            //let result = [];// = await FindNote(decodedAudio);
+            //let result = [];// = await FindPowerOfNote(decodedAudio);
             if ( decodedAudio.length < 25000) {
                 for (let i = 0; i < 12; i++) {
-                    //let temp = await FindNote(decodedAudio, i);
+                    //let temp = await FindPowerOfNote(decodedAudio, i);
                     try{
-                        await FindNote(decodedAudio, i);
+                        await FindPowerOfNote(decodedAudio, i);
                         //result.push(temp);
                     }catch(e) {
                         console.log("error", e.message);
