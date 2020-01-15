@@ -5,7 +5,7 @@ import React from 'react';
 let recorder; //recordButton, stopButton, 
 let recordedChunks = [];
 const recordingTime = 100; //every half second //try reducing even more
-let clockGetData, clockProcessData;
+//let clockGetData, clockProcessData;
 let bufferSize = 380000;//best value 380000 why?;
 let bufferPos = 0;
 let canProcess = true;
@@ -107,8 +107,21 @@ class AudioIn extends React.Component {
         super(props);
         this.state = {
             recording : false,
-            results : []
+            results : [],
+            clockGetData : null, 
+            clockProcessData : null
         };
+    }
+
+    componentDidMount() {
+        this._interval = setInterval(() => {
+            this.displayNotes(true);
+            this.forceUpdate();
+        }, 2000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this._interval);
     }
 
     displayNotes(display) {
@@ -162,6 +175,7 @@ class AudioIn extends React.Component {
             console.log(notes);
             canProcess = true;
         }  
+
     }
 
     listen() {
@@ -173,13 +187,13 @@ class AudioIn extends React.Component {
             console.log("start");
             this.displayNotes(false);
             recorder.start();
-            clockGetData = setInterval(this.getData, recordingTime); //put these timer variables inside the component
-            clockProcessData = setInterval(this.processData, recordingTime+1);
+            this.setState({clockGetData : setInterval(this.getData, recordingTime)}); //put these timer variables inside the component
+            this.setState({clockProcessData : setInterval(this.processData, recordingTime+1)});
         } else {
             console.log("end");
             recorder.stop();
-            clearInterval(clockGetData);
-            clearInterval(clockProcessData);
+            clearInterval(this.state.clockGetData);
+            clearInterval(this.state.clockProcessData);
             this.displayNotes(true);
             bufferPos = 0;
             recordedChunks = [];
