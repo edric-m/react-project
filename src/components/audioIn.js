@@ -113,16 +113,18 @@ class AudioIn extends React.Component {
         };
     }
 
+    /*
     componentDidMount() {
-        this._interval = setInterval(() => {
+        this._interval = setInterval(() => {  //what if we rename _interval?
             this.displayNotes(true);
-            this.forceUpdate();
-        }, 2000);
+            this.forceUpdate(); //remove?
+        }, 500);
     }
 
     componentWillUnmount() {
         clearInterval(this._interval);
     }
+    */
 
     displayNotes(display) {
         if(display) {
@@ -132,10 +134,12 @@ class AudioIn extends React.Component {
                 for (let i = 0; i < 12; i++ ) {
                     if(notes[i].powerTotal > max) {
                         max = notes[i].powerTotal;
+                        
                         maxIdx = i;
                     }
                 }
                 this.setState({results : JSON.stringify(notes[maxIdx])}); 
+                notes[maxIdx].powerTotal = notes[maxIdx].powerTotal - 1; //TODO: sort of works, improve this
             } catch (e) {
                 console.log("error", e.message);
             }
@@ -189,11 +193,18 @@ class AudioIn extends React.Component {
             recorder.start();
             this.setState({clockGetData : setInterval(this.getData, recordingTime)}); //put these timer variables inside the component
             this.setState({clockProcessData : setInterval(this.processData, recordingTime+1)});
+
+            //TODO: put in own function
+            this._interval = setInterval(() => {  //what if we rename _interval?
+                this.displayNotes(true);
+                this.forceUpdate(); //remove?
+            }, 500);
         } else {
             console.log("end");
             recorder.stop();
             clearInterval(this.state.clockGetData);
             clearInterval(this.state.clockProcessData);
+            clearInterval(this._interval);
             this.displayNotes(true);
             bufferPos = 0;
             recordedChunks = [];
