@@ -10,18 +10,18 @@ let bufferSize = 380000;//best value 380000 why?;
 let bufferPos = 0;
 let canProcess = true;
 let notes = [
-    {note : "C" , freq : 16.35, powerTotal : 0},//32.7032},
-    {note : "C#", freq : 17.32, powerTotal : 0},//34.6478},
-    {note : "D", freq : 18.35, powerTotal : 0},//36.7081},
-    {note : "D#", freq : 19.45, powerTotal : 0},//38.8909},
-    {note : "E", freq : 20.6, powerTotal : 0},//41.2034},
-    {note : "F", freq : 21.83, powerTotal : 0},//43.6535},
-    {note : "F#", freq : 23.12, powerTotal : 0},//46.2493},
-    {note : "G", freq : 24.5, powerTotal : 0},//48.9994},
-    {note : "G#", freq : 25.96, powerTotal : 0},//51.9131},
-    {note : "A" , freq : 27.5, powerTotal : 0},//55},
-    {note : "A#", freq : 29.14, powerTotal : 0},//58.2705},
-    {note : "B", freq : 30.87, powerTotal : 0}//61.7354}
+    {note : "C" , freq : 130.813, powerTotal : 0},//32.7032},
+    {note : "C#", freq : 138.591, powerTotal : 0},//34.6478},
+    {note : "D", freq : 146.832, powerTotal : 0},//36.7081},
+    {note : "D#", freq : 155.563, powerTotal : 0},//38.8909},
+    {note : "E", freq : 82.4069, powerTotal : 0},//41.2034},
+    {note : "F", freq : 87.3071, powerTotal : 0},//43.6535},
+    {note : "F#", freq : 92.4986, powerTotal : 0},//46.2493},
+    {note : "G", freq : 97.9989, powerTotal : 0},//48.9994},
+    {note : "G#", freq : 103.826, powerTotal : 0},//51.9131},
+    {note : "A" , freq : 110, powerTotal : 0},//55},
+    {note : "A#", freq : 116.541, powerTotal : 0},//58.2705},
+    {note : "B", freq : 123.471, powerTotal : 0}//61.7354}
 ];
 
 function recordingReady(e) {
@@ -77,7 +77,7 @@ async function FindPowerOfNote ( chunk, i ) {
     //console.log(chunk.length);
     let re = 0; //these two should be a running total
     let im = 0;
-    for ( let k = 1; k < 128; k*=2 ) {
+    for ( let k = 1; k < 128; k*=2 ) { //k < 128
         for ( let n = 0; n < chunk.length; n++) {
             bufferPos ++;
             if (bufferPos === bufferSize) {
@@ -130,16 +130,29 @@ class AudioIn extends React.Component {
         if(display) {
             let max = 0;
             let maxIdx;
+            let secondIdx;
+            let thirdIdx;
+            let fourthIdx;
             try {
                 for (let i = 0; i < 12; i++ ) {
                     if(notes[i].powerTotal > max) {
                         max = notes[i].powerTotal;
-                        
+                        fourthIdx = thirdIdx;
+                        thirdIdx = secondIdx;
+                        secondIdx = maxIdx;
                         maxIdx = i;
                     }
                 }
-                this.setState({results : JSON.stringify(notes[maxIdx])}); 
-                notes[maxIdx].powerTotal = notes[maxIdx].powerTotal - 1; //TODO: sort of works, improve this
+                this.setState({results : JSON.stringify(notes[maxIdx]) + 
+                    JSON.stringify(notes[secondIdx]) + 
+                    JSON.stringify(notes[thirdIdx]) + 
+                    JSON.stringify(notes[fourthIdx])}); 
+
+                //add decay to power
+                for (let i = 0; i < 12; i++ ) {
+                    notes[i].powerTotal = notes[i].powerTotal * 0.8; //TODO: sort of works, improve this, faster is better
+                }
+                
             } catch (e) {
                 console.log("error", e.message);
             }
@@ -191,6 +204,7 @@ class AudioIn extends React.Component {
             console.log("start");
             this.displayNotes(false);
             recorder.start();
+            //TODO: change the two variables below back
             this.setState({clockGetData : setInterval(this.getData, recordingTime)}); //put these timer variables inside the component
             this.setState({clockProcessData : setInterval(this.processData, recordingTime+1)});
 
