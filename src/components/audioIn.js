@@ -23,6 +23,7 @@ let notes = [
     {note : "A#", freq : 116.541, powerTotal : 0},//58.2705},
     {note : "B", freq : 123.471, powerTotal : 0}//61.7354}
 ];
+let foundNotes = [];
 
 function recordingReady(e) {
     if (e.data.size > 0) {
@@ -106,6 +107,7 @@ class AudioIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            button : "listen",
             recording : false,
             results : [],
             clockGetData : null, 
@@ -143,15 +145,19 @@ class AudioIn extends React.Component {
                         maxIdx = i;
                     }
                 }
-                this.setState({results : JSON.stringify(notes[maxIdx]) + 
-                    JSON.stringify(notes[secondIdx]) + 
-                    JSON.stringify(notes[thirdIdx]) + 
-                    JSON.stringify(notes[fourthIdx])}); 
 
                 //add decay to power
                 for (let i = 0; i < 12; i++ ) {
                     notes[i].powerTotal = notes[i].powerTotal * 0.8; //TODO: sort of works, improve this, faster is better
                 }
+
+                this.setState({results : JSON.stringify(notes[maxIdx]) + 
+                    JSON.stringify(notes[secondIdx]) + 
+                    JSON.stringify(notes[thirdIdx]) + 
+                    JSON.stringify(notes[fourthIdx])}); 
+
+                foundNotes = [notes[maxIdx].note, notes[secondIdx].note, notes[thirdIdx].note];
+                this.props.chooseNote(foundNotes);
                 
             } catch (e) {
                 console.log("error", e.message);
@@ -213,6 +219,8 @@ class AudioIn extends React.Component {
                 this.displayNotes(true);
                 this.forceUpdate(); //remove?
             }, 500);
+
+            this.setState({button: "stop"});
         } else {
             console.log("end");
             recorder.stop();
@@ -236,13 +244,15 @@ class AudioIn extends React.Component {
                 {note : "A#", freq : 29.14, powerTotal : 0},//58.2705},
                 {note : "B", freq : 30.87, powerTotal : 0}//61.7354}
             ];
+
+            this.setState({button: "listen"});
         }
     }
 
     render() {
         return (
             <>
-            <button onClick={(e) => this.listen()}>record</button>
+            <button onClick={(e) => this.listen()}>{this.state.button}</button>
             <p>{this.state.results}</p>
             </>
         );

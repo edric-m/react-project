@@ -25,9 +25,11 @@
 
 /*-----------Body---------------------*/
 #page-content {
-  max-width: 700px;
+  /*max-width: 700px;*/
   margin: auto;
   padding-top: 20px;
+  padding-left: 10px;
+  display: flex;
 }
 
 /*-----------Nav bar styles-------------*/
@@ -71,6 +73,12 @@ footer {
 /*-----------guitar---------------*/
 .guitar {
   display: inline-flex;
+  padding-right: 20px;
+}
+
+/*--------app functions ----------*/
+.appFunctions {
+  display: block;
 }
 
 /*----------- fretboard -------------*/
@@ -124,4 +132,9 @@ footer {
 .choose-key li:hover {
   background-color: rgb(187, 193, 197);
   cursor: pointer;
+}
+
+/*----------note-listener ------------*/
+.note-listener {
+  max-width: 10px; /*TODO: the value doesn't seem to effect the class*/
 }
