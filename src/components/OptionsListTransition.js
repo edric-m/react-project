@@ -19,13 +19,18 @@ class OptionsListTransition extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: ['scales','chords','tuning']
+            items: ['parent','scales']//[,'scales','chords','tuning']
         };
     }
 
-    addItem() {
-        let temp = this.state.items;
-        temp.push('A#');
+    addItem( itemName ) {
+        let temp = [];
+        const n = itemName.length;
+        //for each
+        for(let i = 0; i < n; i++) {
+            temp.push(itemName[i]);
+        }
+        
         this.setState({ items: temp });
     }
 
@@ -35,8 +40,7 @@ class OptionsListTransition extends React.Component {
         
         return (
             <>
-            <div className="appFunctions"
-                onClick={() => this.addItem()}>
+            <div className="appFunctions">
                 <Transition
                     items={this.state.items}
                     //initial={null}
@@ -46,8 +50,10 @@ class OptionsListTransition extends React.Component {
                     update={{ background: '#FCFFFF' }}
                     trail={200}>
                     {item => styles => (
-                        <animated.div style={{ ...defaultStyles, ...styles }}>
-                        {Data.find(x => x.name === item).content}
+                        <animated.div 
+                            style={{ ...defaultStyles, ...styles }}
+                            onClick={() => this.addItem(Data.find(x => x.name === item).children)}>
+                            {Data.find(x => x.name === item).content}
                         </animated.div>
                     )}
                 </Transition>

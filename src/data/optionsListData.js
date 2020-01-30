@@ -1,6 +1,6 @@
-const notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "Gb", "G"];
+const notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 const chordRoot = ["rA", "rA#", "rB", "rC", "rC#", "rD", "rD#", "rE", "rF", "rGb", "rG"];
-const modes = ["lydian", "ionian(major)", "mixolydian", "dorian", "aeolian(minor)", "phrygian", "locrian"];
+const modes = ["lydian", "ionian", "mixolydian", "dorian", "aeolian", "phrygian", "locrian"];
 const tuningOps = ["standard", "drop d", "DADGBD", "DADGAD", "DGDGBD", "GGDGBD", "DADADD"];
 
 //contains all possible items that can be added to the list and what functions they invoke when clicked
@@ -21,15 +21,13 @@ export default[
     {name: "G", content: "G", children: modes, function: "chooseCenter=G"},
     {name: "G#", content: "G#", children: modes, function: "chooseCenter=G#"},
     //modes
-    /*
-    {name: "lydian", content: modes[0], children: [], function: "chooseMode="+mode[0]},
-    {name: "ionian", content: modes[1] + " or major chord", children: [], function: "chooseMode="+mode[1]},
-    {name: "mixolydian", content: modes[2], children: [], function: "chooseMode="+mode[2]},
-    {name: "dorian", content: modes[3], children: [], function: "chooseMode="+mode[3]},
-    {name: "aeolian", content: modes[4] + " or minor chord", children: [], function: "chooseMode="+mode[4]},
-    {name: "phrygian", content: modes[5], children: [], function: "chooseMode="+mode[5]},
-    {name: "locrian", content: modes[6], children: [], function: "chooseMode="+mode[6]},
-    */
+    {name: "lydian", content: modes[0], children: [], function: "chooseMode="+modes[0]},
+    {name: "ionian", content: modes[1] + " or major chord", children: [], function: "chooseMode="+modes[1]},
+    {name: "mixolydian", content: modes[2], children: [], function: "chooseMode="+modes[2]},
+    {name: "dorian", content: modes[3], children: [], function: "chooseMode="+modes[3]},
+    {name: "aeolian", content: modes[4] + " or minor chord", children: [], function: "chooseMode="+modes[4]},
+    {name: "phrygian", content: modes[5], children: [], function: "chooseMode="+modes[5]},
+    {name: "locrian", content: modes[6], children: [], function: "chooseMode="+modes[6]},
 
     //chords
     {name: "chords", content: "chords", children: chordRoot, function: []},
@@ -85,6 +83,12 @@ export default[
     {name: "DADADD", content: "DADADD", children: [], function: "chooseTuning=DADADD"}
     //info for each tuning
     //...
+
+    //test items
+    ,
+    {name: "parent", content: "parent", children: ["child","child2"], function: []},
+    {name: "child", content: "it worked", children: [], function: []},
+    {name: "child2", content: "it worked again", children: [], function: []}
 
     //placeholder
     //"temp", content: "placeholder", children: []}
