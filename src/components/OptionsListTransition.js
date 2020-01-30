@@ -19,19 +19,40 @@ class OptionsListTransition extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: ['parent','scales']//[,'scales','chords','tuning']
+            items: ['scales','tuning']//[,'scales','chords','tuning']
         };
     }
 
-    addItem( itemName ) {
-        let temp = [];
-        const n = itemName.length;
+    clickItem( itemName ) {
+        let temp = ['scales','tuning'];
+        let x = Data.find(x => x.name === itemName);
+        let children = x.children;
+        const n = children.length;
+
         //for each
         for(let i = 0; i < n; i++) {
-            temp.push(itemName[i]);
+            temp.push(children[i]);
         }
         
         this.setState({ items: temp });
+
+        //then execute function here?
+        let code = x.function;
+        if(code !== []) {
+            switch(code[0]) {
+                case 'K':
+                    this.props.center(code.slice(2));
+                    break;
+                case 'M': 
+                    this.props.scale(code.slice(2));
+                    break;
+                case 'T': 
+                    this.props.tune(code.slice(2), 'C'); //second argument shouldnt work
+                    break;
+                default:
+                    //default case
+            }
+        }
     }
 
     render() {
@@ -48,11 +69,11 @@ class OptionsListTransition extends React.Component {
                     enter={{ height: 38, opacity: 1, background: '#FCFFFF' }}
                     leave={{ height: 0, opacity: 0, background: '#FCFFFF' }}
                     update={{ background: '#FCFFFF' }}
-                    trail={200}>
+                    trail={50}>
                     {item => styles => (
                         <animated.div 
                             style={{ ...defaultStyles, ...styles }}
-                            onClick={() => this.addItem(Data.find(x => x.name === item).children)}>
+                            onClick={() => this.clickItem(item)}>
                             {Data.find(x => x.name === item).content}
                         </animated.div>
                     )}
