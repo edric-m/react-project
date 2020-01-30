@@ -21,6 +21,7 @@ export default{
     "G": {content: "G", children: modes, function: "chooseCenter=G"},
     "G#": {content: "G#", children: modes, function: "chooseCenter=G#"},
     //modes
+    /*
     "lydian": {content: modes[0], children: [], function: "chooseMode="+mode[0]},
     "ionian": {content: modes[1] + " or major chord", children: [], function: "chooseMode="+mode[1]},
     "mixolydian": {content: modes[2], children: [], function: "chooseMode="+mode[2]},
@@ -28,6 +29,7 @@ export default{
     "aeolian": {content: modes[4] + " or minor chord", children: [], function: "chooseMode="+mode[4]},
     "phrygian": {content: modes[5], children: [], function: "chooseMode="+mode[5]},
     "locrian": {content: modes[6], children: [], function: "chooseMode="+mode[6]},
+    */
 
     //chords
     "chords": {content: "chords", children: chordRoot, function: []},

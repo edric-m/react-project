@@ -1,29 +1,32 @@
 import React from 'react';
-//import ListItem from '../components/listItem.js';
 import {Transition, animated} from 'react-spring/renderprops';
+import Data from '../data/optionsListData.js';
 
 const defaultStyles = {
     overflow: 'hidden',
     width: '100%',
-    color: 'white',
+    color: 'black',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: '2em',
+    fontSize: '1.5em',
     fontFamily: "'Kanit', sans-serif",
     textTransform: 'uppercase',
 }
 
 //from HomePage.js center={this.chooseKey} scale={this.chooseScale} tune={this.chooseTuning} <- props
 class OptionsListTransition extends React.Component {
-    state = { items: [] }
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: ['scales','chords','tuning']
+        };
+    }
 
-    async componentDidMount() {
-        this.setState({ items: [] });
-        setTimeout(() => {
-            this.setState({ items: ['click me'] });
-        },1000);
-        
+    addItem() {
+        let temp = this.state.items;
+        temp.push('A#');
+        this.setState({ items: temp });
     }
 
     render() {
@@ -33,18 +36,18 @@ class OptionsListTransition extends React.Component {
         return (
             <>
             <div className="appFunctions"
-                onClick={() => this.componentDidMount()}>
+                onClick={() => this.addItem()}>
                 <Transition
                     items={this.state.items}
                     //initial={null}
                     from={{ overflow: 'hidden', height: 0, opacity: 0 }}
-                    enter={{ height: 50, opacity: 1, background: '#28d79f' }}
-                    leave={{ height: 0, opacity: 0, background: '#c23369' }}
-                    update={{ background: '#28b4d7' }}
+                    enter={{ height: 38, opacity: 1, background: '#FCFFFF' }}
+                    leave={{ height: 0, opacity: 0, background: '#FCFFFF' }}
+                    update={{ background: '#FCFFFF' }}
                     trail={200}>
                     {item => styles => (
                         <animated.div style={{ ...defaultStyles, ...styles }}>
-                        {item}
+                        {Data.find(x => x.name === item).content}
                         </animated.div>
                     )}
                 </Transition>
