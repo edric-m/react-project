@@ -6,7 +6,7 @@ const defaultStyles = {
     overflow: 'hidden',
     width: '100%',
     color: 'black',
-    display: 'flex',
+    //display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: '1.5em',
@@ -14,26 +14,47 @@ const defaultStyles = {
     textTransform: 'uppercase',
 }
 
+
 //from HomePage.js center={this.chooseKey} scale={this.chooseScale} tune={this.chooseTuning} <- props
 class OptionsListTransition extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: ['scales','tuning']//[,'scales','chords','tuning']
+            items: ['scales','tuning','chords'],//[,'scales','chords','tuning'],
+            chordType: "null"
         };
     }
 
     clickItem( itemName ) {
-        let temp = ['scales','tuning'];
+        let temp = this.state.items;
         let x = Data.find(x => x.name === itemName);
         let children = x.children;
         const n = children.length;
 
+        temp.pop();
+        temp.pop();
+        temp.pop();
+
+        while(temp.length > 12) {
+            temp.shift();
+        }
         //for each
         for(let i = 0; i < n; i++) {
-            temp.push(children[i]);
+            
+            if(temp.length === 12) {
+                temp.shift();
+            }
+
+            if(!temp.includes(children[i]))
+            {
+                temp.push(children[i]);
+            }
         }
+        temp.push('scales');
+        temp.push('tuning');
+        temp.push('chords');
         
+        console.log(this.state.items);
         this.setState({ items: temp });
 
         //then execute function here?
@@ -47,7 +68,13 @@ class OptionsListTransition extends React.Component {
                     this.props.scale(code.slice(2));
                     break;
                 case 'T': 
-                    this.props.tune(code.slice(2), 'C'); //second argument shouldnt work
+                    this.props.tune(code.slice(2).split(" "));
+                    break;
+                case 'C':
+                    this.props.chord(code.slice(2), this.state.chordType);
+                    break;
+                case 'S':
+                    this.setState({chordType: code.slice(2)});
                     break;
                 default:
                     //default case
@@ -72,13 +99,14 @@ class OptionsListTransition extends React.Component {
                     trail={50}>
                     {item => styles => (
                         <animated.div 
+                            className={item.length > 2 ? "appFunctionsItem" : "appFunctionsShortItem"}
                             style={{ ...defaultStyles, ...styles }}
                             onClick={() => this.clickItem(item)}>
-                            {Data.find(x => x.name === item).content}
+                            {Data.find(x => x.name === item).content + " "}
                         </animated.div>
                     )}
                 </Transition>
-            </div>
+            </div>    
             </>
         )
     }

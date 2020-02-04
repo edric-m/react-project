@@ -101,7 +101,7 @@ class String extends React.Component {
         let x = this.chooseString(this.props.tuning, this.props.keyNote);
         return (
             x.map((item,key) => (
-                <Note key={key} chooseNote={this.props.chooseNote} note={item.note} degree={item.degree} scale={this.props.scale}/>)
+                <Note key={key} chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} note={item.note} degree={item.degree} scale={this.props.scale}/>)
             )
         );
     }

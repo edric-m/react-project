@@ -80,6 +80,14 @@ footer {
 .appFunctions {
   display: block;
 }
+.appFunctionsItem {
+  /*display: flex;*/
+  cursor: pointer;
+}
+.appFunctionsShortItem {
+  display: inline;
+  cursor: pointer;
+}
 
 /*----------- fretboard -------------*/
 .fretboard:hover {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Fretboard from '../components/fretboard.js';
-//import Chord from '../components/chord.js';
+import Chord from '../components/chord.js';
 //import AudioIn from '../components/audioIn.js';
 //import OptionsList from '../components/OptionsListStatic.js';
 import OptionsList from '../components/OptionsListTransition.js';
@@ -15,7 +15,8 @@ class HomePage extends React.Component {
             chosenNote: "C",
             scaleType: "ionian",
             tuning: ["E","A","D","G","B","E"],
-            chord: []
+            chord: [],
+            chordType: "null"
         };
     }
 
@@ -31,14 +32,15 @@ class HomePage extends React.Component {
         this.setState({tuning: tuning});
     }
 
-    tuneString = (stringNum, pitch) => {
+    tuneString = (stringNum, pitch) => { 
         let result = this.state.tuning;
         result[stringNum] = pitch.toUpperCase();
         this.chooseTuning(result);
     }
 
-    chooseChord = (chordNotes) => {
+    chooseChord = (chordNotes, type) => {
         this.setState({chord: chordNotes});
+        this.setState({chordType: type});
     }
 
     render() {
@@ -57,19 +59,21 @@ class HomePage extends React.Component {
                     </form>
                 </div>
                 <div>
-                    <Fretboard chooseNote={this.chooseChord} keyNote={this.state.chosenNote} scale={this.state.scaleType} tuning={this.state.tuning} />
+                    <Fretboard chooseNote={this.chooseChord} chordNotes={this.state.chord} keyNote={this.state.chosenNote} scale={this.state.scaleType} tuning={this.state.tuning} />
                 </div>
-                    {
-                //TODO: listen component to reintroduce later
- //               <h4><Chord notes={this.state.chord} /></h4>
- //               <p>{this.state.chord.toString()}</p>
-//                <div className="note-listener">
-//                    <AudioIn chooseNote={this.chooseChord} />
-//                </div>
-                    }
             </div>
 
-            <OptionsList center={this.chooseKey} scale={this.chooseScale} tune={this.chooseTuning} />
+            <OptionsList center={this.chooseKey} scale={this.chooseScale} tune={this.chooseTuning} chord={this.chooseChord} />
+
+            <div className="chordFinder">
+                <h4><Chord notes={this.state.chord} /></h4>
+                <p>{this.state.chord.toString()}</p>
+                {
+                //<div className="note-listener">
+                //    <AudioIn chooseNote={this.chooseChord} />
+                //</div>
+                }
+            </div>
            
             </>
         )

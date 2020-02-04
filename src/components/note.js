@@ -10,10 +10,11 @@ const scales = {
     "locrian" : ["P1" ,"m2","m3","P4","d5","m6", "m7"]
 };
 
-let chords = [];
+//let chords = []; chordNotes={this.props.chordNotes}
 
 class Note extends React.Component {
     noteClicked() {
+        let chords = this.props.chordNotes;
         if ( !chords.includes(this.props.note)) {
             chords.push(this.props.note)
             this.props.chooseNote(chords);
@@ -29,6 +30,7 @@ class Note extends React.Component {
         }
     }
     render() {
+        let chords = this.props.chordNotes;
         let i = 0;
         let selectedClassCSS = "not-selected";
         if(chords.includes(this.props.note)) {

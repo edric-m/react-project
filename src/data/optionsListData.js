@@ -1,7 +1,8 @@
 const notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
-const chordRoot = ["rA", "rA#", "rB", "rC", "rC#", "rD", "rD#", "rE", "rF", "rGb", "rG"];
+const chordRoot = ["rA", "rA#", "rB", "rC", "rC#", "rD", "rD#", "rE", "rF", "rF#", "rG", "rG#"];
 const modes = ["lydian", "ionian", "mixolydian", "dorian", "aeolian", "phrygian", "locrian"];
 const tuningOps = ["standard", "drop d", "DADGBD", "DADGAD", "DGDGBD", "GGDGBD", "DADADD"];
+const chordTypes = ["smaj","smin","smaj7","smin7","s7","sdim","saug","ssus2","ssus4"];
 
 //contains all possible items that can be added to the list and what functions they invoke when clicked
 export default[
@@ -30,31 +31,31 @@ export default[
     {name: "locrian", content: modes[6], children: [], function: "M="+modes[6]},
 
     //chords
-    {name: "chords", content: "chords", children: chordRoot, function: []},
+    {name: "chords", content: "chords", children: chordTypes, function: []},
     //chord roots
-    {name: "rA", content: "A", children: [], function: "C=A"},
-    {name: "rA#", content: "A#", children: [], function: "C=A#"},
-    {name: "rB", content: "B", children: [], function: "C=B"},
-    {name: "rC", content: "C", children: [], function: "C=C"},
-    {name: "rC#", content: "C#", children: [], function: "C=C#"},
-    {name: "rD", content: "D", children: [], function: "C=D"},
-    {name: "rD#", content: "D#", children: [], function: "C=D#"},
-    {name: "rE", content: "E", children: [], function: "C=E"},
-    {name: "rF", content: "F", children: [], function: "C=F"},
-    {name: "rF#", content: "F#", children: [], function: "C=F#"},
-    {name: "rG", content: "G", children: [], function: "C=G"},
-    {name: "rG#", content: "G#", children: [], function: "C=G#"},
+    {name: "rA", content: "A", children: chordTypes, function: "C=A"},
+    {name: "rA#", content: "A#", children: chordTypes, function: "C=A#"},
+    {name: "rB", content: "B", children: chordTypes, function: "C=B"},
+    {name: "rC", content: "C", children: chordTypes, function: "C=C"},
+    {name: "rC#", content: "C#", children: chordTypes, function: "C=C#"},
+    {name: "rD", content: "D", children: chordTypes, function: "C=D"},
+    {name: "rD#", content: "D#", children: chordTypes, function: "C=D#"},
+    {name: "rE", content: "E", children: chordTypes, function: "C=E"},
+    {name: "rF", content: "F", children: chordTypes, function: "C=F"},
+    {name: "rF#", content: "F#", children: chordTypes, function: "C=F#"},
+    {name: "rG", content: "G", children: chordTypes, function: "C=G"},
+    {name: "rG#", content: "G#", children: chordTypes, function: "C=G#"},
 
     //chord types
-    {name: "smaj", content: "maj", children: chordRoot, function: []},
-    {name: "smin", content: "min", children: chordRoot, function: []},
-    {name: "smaj7", content: "maj7", children: chordRoot, function: []},
-    {name: "smin7", content: "min7", children: chordRoot, function: []},
-    {name: "s7", content: "7", children: chordRoot, function: []},
-    {name: "sdim", content: "dim", children: chordRoot, function: []},
-    {name: "saug", content: "aug", children: chordRoot, function: []},
-    {name: "ssus2", content: "sus2", children: chordRoot, function: []},
-    {name: "ssus4", content: "sus4", children: chordRoot, function: []},
+    {name: "smaj", content: "maj", children: chordRoot, function: "S=maj"},
+    {name: "smin", content: "min", children: chordRoot, function: "S=min"},
+    {name: "smaj7", content: "maj7", children: chordRoot, function: "S=maj7"},
+    {name: "smin7", content: "min7", children: chordRoot, function: "S=min7"},
+    {name: "s7", content: "7", children: chordRoot, function: "S=7"},
+    {name: "sdim", content: "dim", children: chordRoot, function: "S=dim"},
+    {name: "saug", content: "aug", children: chordRoot, function: "S=aug"},
+    {name: "ssus2", content: "sus2", children: chordRoot, function: "S=sus2"},
+    {name: "ssus4", content: "sus4", children: chordRoot, function: "S=sus4"},
     //note types
     {name: "sA", content: "A", children: [], function: []},
     {name: "sA#", content: "A#", children: [], function: []},
@@ -74,13 +75,13 @@ export default[
     //tuning
     {name: "tuning", content: "tuning", children: tuningOps, function: []},
     //tuning types
-    {name: "standard", content: "standard tuning", children: [], function: "T=EADGBE"},
-    {name: "drop d", content: "drop d", children: [], function: "T=DADGBE"},
-    {name: "DADGBD", content: "DADGBD", children: [], function: "T=DADGBD"},
-    {name: "DADGAD", content: "DADGAD", children: [], function: "T=DADGAD"},
-    {name: "DGDGBD", content: "DGDGBD", children: [], function: "T=DGDGBD"},
-    {name: "GGDGBD", content: "GGDGBD", children: [], function: "T=GGDGBD"},
-    {name: "DADADD", content: "DADADD", children: [], function: "T=DADADD"}
+    {name: "standard", content: "standard tuning", children: [], function: "T=E A D G B E"},
+    {name: "drop d", content: "drop d", children: [], function: "T=D A D G B E"},
+    {name: "DADGBD", content: "DADGBD", children: [], function: "T=D A D G B D"},
+    {name: "DADGAD", content: "DADGAD", children: [], function: "T=D A D G A D"},
+    {name: "DGDGBD", content: "DGDGBD", children: [], function: "T=D G D G B D"},
+    {name: "GGDGBD", content: "GGDGBD", children: [], function: "T=G G D G B D"},
+    {name: "DADADD", content: "DADADD", children: [], function: "T=D A D A D D"}
     //info for each tuning
     //...
 
