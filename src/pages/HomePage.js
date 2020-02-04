@@ -15,8 +15,8 @@ class HomePage extends React.Component {
             chosenNote: "C",
             scaleType: "ionian",
             tuning: ["E","A","D","G","B","E"],
-            chord: [],
-            chordType: "null"
+            chord: []//,
+            //chordType: "null"
         };
     }
 
@@ -38,9 +38,9 @@ class HomePage extends React.Component {
         this.chooseTuning(result);
     }
 
-    chooseChord = (chordNotes, type) => {
+    chooseChord = (chordNotes) => {
         this.setState({chord: chordNotes});
-        this.setState({chordType: type});
+        //this.setState({chordType: type}); needs type param
     }
 
     render() {

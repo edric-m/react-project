@@ -25,6 +25,52 @@ class OptionsListTransition extends React.Component {
         };
     }
 
+    chordNotes (root) {
+        const notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
+        //rearrange notes depending on root
+        let temp = [];
+        let x = notes.indexOf(root);
+        for (let i=0;i<12;i++) {
+            if(x+i===12) {
+                x=0-i;
+            }
+            
+            temp.push(notes[ x + i ]);
+        }
+        let selectedNotes = [];
+        switch(this.state.chordType) {
+            case "maj":
+                selectedNotes = [0,4,7];
+                break;
+            case "min":
+                selectedNotes = [0,3,7];
+                break;
+            case "maj7":
+                selectedNotes = [0,4,7,11];
+                break;
+            case "min7":
+                selectedNotes = [0,3,7,10];
+                break;
+            case "7":
+                selectedNotes = [0,4,7,10];
+                break;
+            case "dim":
+                selectedNotes = [0,3,6];
+                break;
+            case "aug":
+                selectedNotes = [0,4,8];
+                break;
+            case "sus2":
+                selectedNotes = [0,2,7];
+                break;
+            case "sus4":
+                selectedNotes = [0,5,7];
+                break;
+            default:
+        }
+        return selectedNotes.map(x => temp[x]);
+    }
+
     clickItem( itemName ) {
         let temp = this.state.items;
         let x = Data.find(x => x.name === itemName);
@@ -54,7 +100,7 @@ class OptionsListTransition extends React.Component {
         temp.push('tuning');
         temp.push('chords');
         
-        console.log(this.state.items);
+        //console.log(this.state.items);
         this.setState({ items: temp });
 
         //then execute function here?
@@ -71,7 +117,7 @@ class OptionsListTransition extends React.Component {
                     this.props.tune(code.slice(2).split(" "));
                     break;
                 case 'C':
-                    this.props.chord(code.slice(2), this.state.chordType);
+                    this.props.chord(this.chordNotes(code.slice(2)));
                     break;
                 case 'S':
                     this.setState({chordType: code.slice(2)});
