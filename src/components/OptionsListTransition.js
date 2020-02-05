@@ -9,7 +9,7 @@ const defaultStyles = {
     //display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: '1.5em',
+    fontSize: '1em',
     fontFamily: "'Kanit', sans-serif",
     textTransform: 'uppercase',
 }
@@ -20,7 +20,7 @@ class OptionsListTransition extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: ['scales','tuning','chords'],//[,'scales','chords','tuning'],
+            items: ['scales','chords','tuning'],//[,'scales','chords','tuning'],
             chordType: "null"
         };
     }
@@ -66,7 +66,10 @@ class OptionsListTransition extends React.Component {
             case "sus4":
                 selectedNotes = [0,5,7];
                 break;
+            case "null":
+                return [];
             default:
+                return [];
         }
         return selectedNotes.map(x => temp[x]);
     }
@@ -97,8 +100,8 @@ class OptionsListTransition extends React.Component {
             }
         }
         temp.push('scales');
-        temp.push('tuning');
         temp.push('chords');
+        temp.push('tuning');
         
         //console.log(this.state.items);
         this.setState({ items: temp });
@@ -121,6 +124,9 @@ class OptionsListTransition extends React.Component {
                     break;
                 case 'S':
                     this.setState({chordType: code.slice(2)});
+                    if(code.slice(2) === "null") {
+                        this.props.chord([]);
+                    }
                     break;
                 default:
                     //default case
@@ -145,7 +151,7 @@ class OptionsListTransition extends React.Component {
                     trail={50}>
                     {item => styles => (
                         <animated.div 
-                            className={item.length > 2 ? "appFunctionsItem" : "appFunctionsShortItem"}
+                            className={item.length > 3 ? "appFunctionsItem" : "appFunctionsShortItem"}
                             style={{ ...defaultStyles, ...styles }}
                             onClick={() => this.clickItem(item)}>
                             {Data.find(x => x.name === item).content + " "}

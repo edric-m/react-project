@@ -1,6 +1,7 @@
 import React from 'react';
 import String from './string.js';
 import FretNumber from './fretNumber.js';
+import Chord from '../components/chord.js';
 
 const scale = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
 const mode = {"lydian":7,"ionian":0,"mixolydian":5,"dorian":10,"aeolian":3,"phrygian":8,"locrian":1};
@@ -22,7 +23,6 @@ class Fretboard extends React.Component {
         }
         return ( //strings can be put in a loop
             <>
-            <h2>: Fretboard</h2>
             <div className="fretboard"> 
                 <div>
                     <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[5]} keyNote={this.props.keyNote} scale={this.props.scale} />
@@ -47,7 +47,7 @@ class Fretboard extends React.Component {
             <div>
                 <FretNumber />
             </div>
-            <h4>Mode: {this.props.keyNote} {this.props.scale}, {pair} major</h4>
+            <p><b>Mode:</b> {this.props.keyNote} {this.props.scale} | <b>Key:</b> {pair} major | <b><font color={this.props.chordNotes.length === 0 ? "black" : "blue"}>Chord:</font></b> <Chord notes={this.props.chordNotes} /> ({this.props.chordNotes.toString()})</p>
             <div className="fretboard">
                 <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.keyNote} keyNote={this.props.keyNote} scale={this.props.scale} />
             </div>

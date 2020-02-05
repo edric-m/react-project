@@ -1,6 +1,5 @@
 import React from 'react';
 import Fretboard from '../components/fretboard.js';
-import Chord from '../components/chord.js';
 //import AudioIn from '../components/audioIn.js';
 //import OptionsList from '../components/OptionsListStatic.js';
 import OptionsList from '../components/OptionsListTransition.js';
@@ -48,7 +47,6 @@ class HomePage extends React.Component {
             <> 
             <div className="guitar">
                 <div>
-                    <h2>Tunning   :</h2>
                     <form className="tunner">
                         <input type="text" onChange={(e) => this.tuneString(5, e.target.value)}/>
                         <input type="text" onChange={(e) => this.tuneString(4, e.target.value)}/>
@@ -66,8 +64,7 @@ class HomePage extends React.Component {
             <OptionsList center={this.chooseKey} scale={this.chooseScale} tune={this.chooseTuning} chord={this.chooseChord} />
 
             <div className="chordFinder">
-                <h4><Chord notes={this.state.chord} /></h4>
-                <p>{this.state.chord.toString()}</p>
+                
                 {
                 //<div className="note-listener">
                 //    <AudioIn chooseNote={this.chooseChord} />

@@ -54,7 +54,7 @@ const orderNotes = (bassNote) => { //export to its own component, along with sam
 
 class ChordIdentifier extends React.Component {
     findChords(degrees, notes) {
-        let chords = "no chord found";
+        let chords = "n/a";
         let bassNote = notes[0];
 
         //very incomplete - maj still not identified correctly, no inverted chords. 
@@ -125,7 +125,7 @@ class ChordIdentifier extends React.Component {
         let chord = this.findChords(degrees, this.props.notes);
         return (
             <>
-            <p>{chord}</p>
+            {chord}
             </>
         );
     }
