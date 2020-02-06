@@ -1,6 +1,6 @@
 import React from 'react';
 import Fretboard from '../components/fretboard.js';
-//import AudioIn from '../components/audioIn.js';
+import AudioIn from '../components/audioIn.js';
 //import OptionsList from '../components/OptionsListStatic.js';
 import OptionsList from '../components/OptionsListTransition.js';
 
@@ -65,11 +65,10 @@ class HomePage extends React.Component {
 
             <div className="chordFinder">
                 
-                {
-                //<div className="note-listener">
-                //    <AudioIn chooseNote={this.chooseChord} />
-                //</div>
-                }
+                <div className="note-listener">
+                    <AudioIn chooseNote={this.chooseChord} />
+                </div>
+
             </div>
            
             </>

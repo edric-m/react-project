@@ -88,6 +88,12 @@ footer {
   display: inline;
   cursor: pointer;
 }
+.appFunctionsItem:hover { /*probably a better way to do this*/
+  background-color: rgb(223, 223, 223);
+}
+.appFunctionsShortItem:hover {
+  background-color: rgb(223, 223, 223);
+}
 
 /*----------- fretboard -------------*/
 .fretboard:hover {
@@ -145,4 +151,28 @@ footer {
 /*----------note-listener ------------*/
 .note-listener {
   max-width: 10px; /*TODO: the value doesn't seem to effect the class*/
+}
+
+/*-------floating action button-------*/
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	left:40px;
+	background-color :rgb(124, 151, 240);
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.float:hover {
+  cursor: pointer;
+}
+
+.my-float{
+  margin-top:5px;
+  width:48px;
+	height:48px;
 }

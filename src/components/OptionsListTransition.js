@@ -154,7 +154,10 @@ class OptionsListTransition extends React.Component {
                             className={item.length > 3 ? "appFunctionsItem" : "appFunctionsShortItem"}
                             style={{ ...defaultStyles, ...styles }}
                             onClick={() => this.clickItem(item)}>
-                            {Data.find(x => x.name === item).content + " "}
+                                <div className={item.length > 3 ? "appFunctionsItem" : "appFunctionsShortItem"}>
+                                    {Data.find(x => x.name === item).content + " "}
+                                </div>
+                            
                         </animated.div>
                     )}
                 </Transition>

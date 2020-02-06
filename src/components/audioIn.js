@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMicrophoneAlt } from '@fortawesome/free-solid-svg-icons';
 
 //TODO : reduce the number of loops for efficiency
 
@@ -246,13 +248,24 @@ class AudioIn extends React.Component {
             ];
 
             this.setState({button: "listen"});
+            this.setState({results: " "});
         }
     }
 
     render() {
+        let icon = faMicrophoneAlt;
         return (
             <>
-            <button onClick={(e) => this.listen()}>{this.state.button}</button>
+            <div class="float">
+
+            <FontAwesomeIcon 
+                class="my-float" 
+                icon={icon} 
+                onClick={(e) => this.listen()} />
+
+            </div>
+            
+
             <p>{this.state.results}</p>
             </>
         );
