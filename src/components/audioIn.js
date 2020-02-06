@@ -158,7 +158,12 @@ class AudioIn extends React.Component {
                     JSON.stringify(notes[thirdIdx]) + 
                     JSON.stringify(notes[fourthIdx])}); 
 
-                foundNotes = [notes[maxIdx].note, notes[secondIdx].note, notes[thirdIdx].note];
+                //push top four notes to fretboard
+                //foundNotes = [notes[maxIdx].note, notes[secondIdx].note, notes[thirdIdx].note];
+
+                //push only top note to fretboard
+                foundNotes = [notes[maxIdx].note];
+
                 this.props.chooseNote(foundNotes);
                 
             } catch (e) {
@@ -252,6 +257,7 @@ class AudioIn extends React.Component {
         }
     }
 
+    //TODO: should be className= not class=, but className doesn't work???
     render() {
         let icon = faMicrophoneAlt;
         let showResults = this.state.recording ? "visible" : "hidden";

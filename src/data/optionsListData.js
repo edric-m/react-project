@@ -79,7 +79,7 @@ export default[
     //tuning types
     {name: "standard", content: "standard tuning", children: [], function: "T=E A D G B E"},
     {name: "NewST", content: "all fifths (NST)", children: [], function: "T=C G D A E G"},
-    {name: "fifths", content: "all fifths (Mandoguitar)", children: [], function: "T=C G D A E B"},
+    {name: "fifths", content: "all fifths", children: [], function: "T=C G D A E B"},
     {name: "drop d", content: "drop d", children: [], function: "T=D A D G B E"},
     {name: "DADGAD", content: "Dad-Gad", children: [], function: "T=D A D G A D"},
     {name: "custom", content: "custom", children: ["infoCustomT"], function: []},
