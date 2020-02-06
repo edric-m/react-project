@@ -254,19 +254,19 @@ class AudioIn extends React.Component {
 
     render() {
         let icon = faMicrophoneAlt;
+        let showResults = this.state.recording ? "visible" : "hidden";
         return (
             <>
             <div class="float">
-
-            <FontAwesomeIcon 
-                class="my-float" 
-                icon={icon} 
-                onClick={(e) => this.listen()} />
-
+                <FontAwesomeIcon 
+                    class="my-float" 
+                    icon={icon} 
+                    onClick={(e) => this.listen()} />
             </div>
-            
+            <div class="label-container" style={{visibility : showResults}}>
+            <div class="label-text">{this.state.results}</div>
+            </div>
 
-            <p>{this.state.results}</p>
             </>
         );
     }
