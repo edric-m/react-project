@@ -25,22 +25,22 @@ class Fretboard extends React.Component {
             <>
             <div className="fretboard"> 
                 <div>
-                    <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[5]} keyNote={this.props.keyNote} scale={this.props.scale} />
+                    <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[5]} keyNote={this.props.keyNote} scale={this.props.scale} showNotes={this.props.showNotes} />
                 </div>
                 <div>
-                    <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[4]} keyNote={this.props.keyNote} scale={this.props.scale} />
+                    <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[4]} keyNote={this.props.keyNote} scale={this.props.scale} showNotes={this.props.showNotes} />
                 </div>
                 <div>
-                    <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[3]} keyNote={this.props.keyNote} scale={this.props.scale} />
+                    <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[3]} keyNote={this.props.keyNote} scale={this.props.scale} showNotes={this.props.showNotes} />
                 </div>
                 <div>
-                    <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[2]} keyNote={this.props.keyNote} scale={this.props.scale} />
+                    <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[2]} keyNote={this.props.keyNote} scale={this.props.scale} showNotes={this.props.showNotes} />
                 </div>
                 <div>
-                    <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[1]} keyNote={this.props.keyNote} scale={this.props.scale} />
+                    <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[1]} keyNote={this.props.keyNote} scale={this.props.scale} showNotes={this.props.showNotes} />
                 </div>
                 <div>
-                    <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[0]} keyNote={this.props.keyNote} scale={this.props.scale} />
+                    <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.tuning[0]} keyNote={this.props.keyNote} scale={this.props.scale} showNotes={this.props.showNotes} />
                 </div>
             </div>
             
@@ -49,7 +49,7 @@ class Fretboard extends React.Component {
             </div>
             <p><b>Mode:</b> {this.props.keyNote} {this.props.scale} | <b>Key:</b> {pair} major | <b><font color={this.props.chordNotes.length === 0 ? "black" : "blue"}>Chord:</font></b> <Chord notes={this.props.chordNotes} /> ({this.props.chordNotes.toString()})</p>
             <div className="fretboard">
-                <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.keyNote} keyNote={this.props.keyNote} scale={this.props.scale} />
+                <String chooseNote={this.props.chooseNote} chordNotes={this.props.chordNotes} tuning={this.props.keyNote} keyNote={this.props.keyNote} scale={this.props.scale} showNotes={this.props.showNotes}/>
             </div>
             </>
         );

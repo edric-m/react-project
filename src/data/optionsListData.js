@@ -83,6 +83,11 @@ export default[
     {name: "drop d", content: "drop d", children: [], function: "T=D A D G B E"},
     {name: "DADGAD", content: "Dad-Gad", children: [], function: "T=D A D G A D"},
     {name: "custom", content: "custom", children: ["infoCustomT"], function: []},
+
+    //display option
+    {name: "changeDisplay", content: "change display", children: ["showNotes", "showDegree"], function: []},
+    {name: "showNotes", content: "show notes", children: [], function: "D=N"},
+    {name: "showDegree", content: "show degrees", children: [], function: "D=D"},
     
     //info
     {name: "infoCustomT", content: "> for custom tuning use the input boxes beside the fretboard", children: tuningOps, function: []},

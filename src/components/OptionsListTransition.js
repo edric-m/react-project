@@ -20,7 +20,7 @@ class OptionsListTransition extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: ['scales','chords','tuning'],//[,'scales','chords','tuning'],
+            items: ['scales','chords','tuning','changeDisplay'],//[,'scales','chords','tuning'],
             chordType: "null"
         };
     }
@@ -83,6 +83,7 @@ class OptionsListTransition extends React.Component {
         temp.pop();
         temp.pop();
         temp.pop();
+        temp.pop();
 
         while(temp.length > 12) {
             temp.shift();
@@ -102,6 +103,7 @@ class OptionsListTransition extends React.Component {
         temp.push('scales');
         temp.push('chords');
         temp.push('tuning');
+        temp.push('changeDisplay');
         
         //console.log(this.state.items);
         this.setState({ items: temp });
@@ -126,6 +128,13 @@ class OptionsListTransition extends React.Component {
                     this.setState({chordType: code.slice(2)});
                     if(code.slice(2) === "null") {
                         this.props.chord([]);
+                    }
+                    break;
+                case 'D':
+                    if(code.slice(2) === "N") {
+                        this.props.changeDisplay(true);
+                    } else {
+                        this.props.changeDisplay(false);
                     }
                     break;
                 default:

@@ -14,7 +14,8 @@ class HomePage extends React.Component {
             chosenNote: "C",
             scaleType: "ionian",
             tuning: ["E","A","D","G","B","E"],
-            chord: []//,
+            chord: [],
+            showNotes: true//,
             //chordType: "null"
         };
     }
@@ -42,6 +43,10 @@ class HomePage extends React.Component {
         //this.setState({chordType: type}); needs type param
     }
 
+    toggleNotes = ( show ) => {
+        this.setState({showNotes: show});
+    }
+
     render() {
         return (
             <> 
@@ -57,11 +62,17 @@ class HomePage extends React.Component {
                     </form>
                 </div>
                 <div>
-                    <Fretboard chooseNote={this.chooseChord} chordNotes={this.state.chord} keyNote={this.state.chosenNote} scale={this.state.scaleType} tuning={this.state.tuning} />
+                    <Fretboard 
+                    chooseNote={this.chooseChord} 
+                    chordNotes={this.state.chord} 
+                    keyNote={this.state.chosenNote} 
+                    scale={this.state.scaleType} 
+                    tuning={this.state.tuning} 
+                    showNotes={this.state.showNotes} />
                 </div>
             </div>
 
-            <OptionsList center={this.chooseKey} scale={this.chooseScale} tune={this.chooseTuning} chord={this.chooseChord} />
+            <OptionsList center={this.chooseKey} scale={this.chooseScale} tune={this.chooseTuning} chord={this.chooseChord} changeDisplay={this.toggleNotes} />
 
             <div className="chordFinder">
                 

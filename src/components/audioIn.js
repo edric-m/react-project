@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMicrophoneAlt } from '@fortawesome/free-solid-svg-icons';
+import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
 
 //TODO : reduce the number of loops for efficiency
 
@@ -109,7 +109,7 @@ class AudioIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            button : "listen",
+            //button : "listen",
             recording : false,
             results : [],
             clockGetData : null, 
@@ -227,7 +227,7 @@ class AudioIn extends React.Component {
                 this.forceUpdate(); //remove?
             }, 500);
 
-            this.setState({button: "stop"});
+            //this.setState({button: "stop"});
         } else {
             console.log("end");
             recorder.stop();
@@ -252,14 +252,14 @@ class AudioIn extends React.Component {
                 {note : "B", freq : 30.87, powerTotal : 0}//61.7354}
             ];
 
-            this.setState({button: "listen"});
+            //this.setState({button: "listen"});
             this.setState({results: " "});
         }
     }
 
     //TODO: should be className= not class=, but className doesn't work???
     render() {
-        let icon = faMicrophoneAlt;
+        let icon = faMicrophone;
         let showResults = this.state.recording ? "visible" : "hidden";
         return (
             <>
