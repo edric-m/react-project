@@ -63,16 +63,21 @@ class HomePage extends React.Component {
                 </div>
                 <div>
                     <Fretboard 
-                    chooseNote={this.chooseChord} 
-                    chordNotes={this.state.chord} 
-                    keyNote={this.state.chosenNote} 
-                    scale={this.state.scaleType} 
-                    tuning={this.state.tuning} 
-                    showNotes={this.state.showNotes} />
+                        chooseNote={this.chooseChord} 
+                        chordNotes={this.state.chord} 
+                        keyNote={this.state.chosenNote} 
+                        scale={this.state.scaleType} 
+                        tuning={this.state.tuning} 
+                        showNotes={this.state.showNotes} />
                 </div>
             </div>
 
-            <OptionsList center={this.chooseKey} scale={this.chooseScale} tune={this.chooseTuning} chord={this.chooseChord} changeDisplay={this.toggleNotes} />
+            <OptionsList 
+                center={this.chooseKey} 
+                scale={this.chooseScale} 
+                tune={this.chooseTuning} 
+                chord={this.chooseChord} 
+                changeDisplay={this.toggleNotes} />
 
             <div className="chordFinder">
                 

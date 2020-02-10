@@ -1,4 +1,4 @@
-const notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
+const notes = ["keyTitle","A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 const chordRoot = ["rA", "rA#", "rB", "rC", "rC#", "rD", "rD#", "rE", "rF", "rF#", "rG", "rG#"];
 const modes = ["lydian", "ionian", "mixolydian", "dorian", "aeolian", "phrygian", "locrian"];
 const tuningOps = ["standard", "NewST", "fifths", "drop d", "DADGAD","custom"];
@@ -8,6 +8,7 @@ const chordTypes = ["smaj","smin","smaj7","smin7","s7chrd","sdim","saug","ssus2"
 export default[
     //scale options
     {name: "scales", content: "key center", children: notes, function: []},
+    {name: "keyTitle", content: "> key center", children: [], function: []},
     //pitch center
     {name: "A", content: "A", children: modes, function: "K=A"},
     {name: "A#", content: "A#", children: modes, function: "K=A#"},
@@ -72,7 +73,15 @@ export default[
     {name: "sG", content: "G", children: [], function: []},
     {name: "sG#", content: "G#", children: [], function: []},
     //related key types (combine with note types)
-    {name: "maj", content: "maj", children: [], function: []},
+    {name: "majTitle", content: "> maj chord", children: [], function: []},
+    {name: "minTitle", content: "> min chord", children: [], function: []},
+    {name: "maj7Title", content: "> maj7 chord", children: [], function: []},
+    {name: "min7Title", content: "> min7 chord", children: [], function: []},
+    {name: "7Title", content: "> 7 chord", children: [], function: []},
+    {name: "dimTitle", content: "> dim chord", children: [], function: []},
+    {name: "augTitle", content: "> aug chord", children: [], function: []},
+    {name: "sus2Title", content: "> sus2 chord", children: [], function: []},
+    {name: "sus4Title", content: "> sus4 chord", children: [], function: []},
 
     //tuning
     {name: "tuning", content: "tuning", children: tuningOps, function: []},
