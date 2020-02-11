@@ -14,14 +14,15 @@ const defaultStyles = {
     textTransform: 'uppercase',
 }
 
-const messagesEndRef = React.createRef();
+//const messagesEndRef = React.createRef();
 
 //from HomePage.js center={this.chooseKey} scale={this.chooseScale} tune={this.chooseTuning} <- props
 class OptionsListTransition extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: ['scales','chords','tuning','changeDisplay'],//[,'scales','chords','tuning'],
+            menuItems: ['scales','chords','tuning','changeDisplay'],//[,'scales','chords','tuning'],
+            items: ['scales','chords','tuning','changeDisplay'],
             chordType: "null"
         };
     }
@@ -83,10 +84,12 @@ class OptionsListTransition extends React.Component {
         const n = children.length;
         const maxListLength = 25;
 
-        temp.pop();
-        temp.pop();
-        temp.pop();
-        temp.pop();
+        //temp.pop();
+        //temp.pop();
+        //temp.pop();
+        //temp.pop();
+
+        temp.splice(0,4);
 
         while(temp.length > maxListLength) {
             temp.shift();
@@ -113,7 +116,7 @@ class OptionsListTransition extends React.Component {
 
                     //TODO: dont like how this is done, page is kind of slow
                     let tempItems = this.state.items;
-                    tempItems.push(code.slice(2) + "Title");
+                    tempItems.push(code.slice(2) + "Title"); //TODO: error when clear chord is selected "null" is not an option
                     this.setState({items: tempItems});
 
                     if(code.slice(2) === "null") {
@@ -132,11 +135,12 @@ class OptionsListTransition extends React.Component {
             }
         }
 
-        //for each
+        //for each new item to add
         for(let i = 0; i < n; i++) {
             
             if(temp.length === maxListLength) {
-                temp.shift();
+                //temp.shift();
+                temp.pop();
             }
 
             //temp = temp.filter(name => name !== children[i]);
@@ -144,27 +148,32 @@ class OptionsListTransition extends React.Component {
 
             //TODO: if chord is chosen need to remove notes, then add them back
 
-            if(!temp.includes(children[i]))
+            if(!temp.includes(children[n-(i+1)]))
             {
-                temp.push(children[i]);
+                //temp.push(children[i]);
+                temp.unshift(children[n-(i+1)]);
             }
         }
         
-        temp.push('scales');
-        temp.push('chords');
-        temp.push('tuning');
-        temp.push('changeDisplay');
+        //temp.push('scales');
+        //temp.push('chords');
+        //temp.push('tuning');
+        //temp.push('changeDisplay');
+
+        //let menu = this.state.menuItems;
+        //let newItems = this.state.items;
+        let result = this.state.menuItems.concat(this.state.items);
         
         //console.log(this.state.items);
-        this.setState({ items: temp });
+        this.setState({ items: result });
 
-        this.scrollToBottom();
+        //this.scrollToBottom();
     }
 
     //force scroll to the bottom of the options list
-    scrollToBottom = () => {
-        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    //scrollToBottom = () => {
+    //    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    //}
 
     render() {
         //const {center, scale, tune} = this.props;
@@ -194,7 +203,9 @@ class OptionsListTransition extends React.Component {
                     )}
                 </Transition>
 
-                <div ref={messagesEndRef} />
+                {
+                //<div ref={messagesEndRef} />
+                }
 
             </div>    
             </>
