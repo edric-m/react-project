@@ -30,7 +30,16 @@
   padding-top: 20px;
   padding-left: 10px;
   display: flex;
-  height: 400px;
+  /*height: 450px;*/
+}
+
+.about-content {
+  max-width: 700px;
+  margin: auto;
+  padding-top: 20px;
+  padding-left: 10px;
+  display: block;
+  margin-left: 100px;
 }
 
 /*-----------Nav bar styles-------------*/
@@ -59,7 +68,7 @@
 
 /*----------- header + footer -------------*/
 footer {
-  /*position: fixed; footer always stays in view*/
+  /*position: fixed; /*footer always stays in view*/
   left: 0;
   bottom: 0;
   width: 100%;
@@ -185,7 +194,8 @@ footer {
 	position:fixed;
 	bottom:48px;
 	left:115px;
-	display:table;
+  display:table;
+  max-width: 400px;
 	/*visibility: visible;*/
 }
 

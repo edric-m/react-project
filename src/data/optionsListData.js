@@ -1,13 +1,16 @@
 const notes = ["keyTitle","A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 const chordRoot = ["rA", "rA#", "rB", "rC", "rC#", "rD", "rD#", "rE", "rF", "rF#", "rG", "rG#"];
 const modes = ["lydian", "ionian", "mixolydian", "dorian", "aeolian", "phrygian", "locrian"];
-const tuningOps = ["standard", "NewST", "fifths", "drop d", "DADGAD","custom"];
-const chordTypes = ["smaj","smin","smaj7","smin7","s7chrd","sdim","saug","ssus2","ssus4","snone","scus"];
+//TODO: has issues -> const modes = ["modeTitle","lydian", "ionian", "mixolydian", "dorian", "aeolian", "phrygian", "locrian"];
+const tuningOps = ["tuneTitle", "standard", "NewST", "fifths", "drop d", "DADGAD","custom"];
+const chordTypes = ["chordTitle","smaj","smin","smaj7","smin7","s7chrd","sdim","saug","ssus2","ssus4","snone","scus"];
+
+//TODO: fix chord item options, has bugs like remaining on the top of the list
 
 //contains all possible items that can be added to the list and what functions they invoke when clicked
 export default[
     //scale options
-    {name: "scales", content: "key center", children: notes, function: []},
+    {name: "sca", content: "- - modes -", children: notes, function: []}, //scales option
     {name: "keyTitle", content: "> key center", children: [], function: []},
     //pitch center
     {name: "A", content: "A", children: modes, function: "K=A"},
@@ -22,6 +25,8 @@ export default[
     {name: "F#", content: "F#", children: modes, function: "K=F#"},
     {name: "G", content: "G", children: modes, function: "K=G"},
     {name: "G#", content: "G#", children: modes, function: "K=G#"},
+    //mode types title
+    {name: "modeTitle", content: "> modes", children: [], function: []},
     //modes
     {name: "lydian", content: modes[0], children: [], function: "M="+modes[0]},
     {name: "ionian", content: modes[1] + " (major)", children: [], function: "M="+modes[1]},
@@ -30,9 +35,10 @@ export default[
     {name: "aeolian", content: modes[4] + " (minor)", children: [], function: "M="+modes[4]},
     {name: "phrygian", content: modes[5], children: [], function: "M="+modes[5]},
     {name: "locrian", content: modes[6], children: [], function: "M="+modes[6]},
-
+    
     //chords
-    {name: "chords", content: "chords", children: chordTypes, function: []},
+    {name: "crd", content: "- chords -", children: chordTypes, function: []}, //chords option
+    {name: "chordTitle", content: "> chord types", children: [], function: []},
     //chord roots
     {name: "rA", content: "A", children: [], function: "C=A"},
     {name: "rA#", content: "A#", children: [], function: "C=A#"},
@@ -84,7 +90,8 @@ export default[
     {name: "sus4Title", content: "> sus4 chord", children: [], function: []},
 
     //tuning
-    {name: "tuning", content: "tuning", children: tuningOps, function: []},
+    {name: "tun", content: "- tuning -", children: tuningOps, function: []}, //tuning option
+    {name: "tuneTitle", content: "> tuning", children: [], function: []},
     //tuning types
     {name: "standard", content: "standard tuning", children: [], function: "T=E A D G B E"},
     {name: "NewST", content: "all fifths (NST)", children: [], function: "T=C G D A E G"},
@@ -94,13 +101,14 @@ export default[
     {name: "custom", content: "custom", children: ["infoCustomT"], function: []},
 
     //display option
-    {name: "changeDisplay", content: "change display", children: ["showNotes", "showDegree"], function: []},
-    {name: "showNotes", content: "show notes", children: [], function: "D=N"},
-    {name: "showDegree", content: "show degrees", children: [], function: "D=D"},
+    {name: "dsp", content: "- change display - -", children: ["dispTitle", "showNotes", "showDegree"], function: []}, //display option
+    {name: "dispTitle", content: "> display", children: [], function: []},
+    {name: "showNotes", content: "notes", children: [], function: "D=N"},
+    {name: "showDegree", content: "degrees", children: [], function: "D=D"},
     
     //info
-    {name: "infoCustomT", content: "> for custom tuning use the input boxes beside the fretboard", children: tuningOps, function: []},
-    {name: "infoCustomC", content: "> click on the fretboard to alter chord", children: [], function: []}
+    {name: "infoCustomT", content: "! for custom tuning use the input boxes beside the fretboard", children: tuningOps, function: []},
+    {name: "infoCustomC", content: "! click on the fretboard to alter chord", children: [], function: []}
 
     //test items
     //,

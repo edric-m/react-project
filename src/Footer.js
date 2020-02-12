@@ -3,7 +3,7 @@ import React from 'react';
 
 const Footer = () => (
     <footer>
-        <p>footer goes here</p>
+        <p><b>email:</b> edric.mendoza@student.uts.edu</p>
     </footer>
 );
 

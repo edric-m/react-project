@@ -21,8 +21,8 @@ class OptionsListTransition extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            menuItems: ['scales','chords','tuning','changeDisplay'],//[,'scales','chords','tuning'],
-            items: ['scales','chords','tuning','changeDisplay'],
+            menuItems: ['sca','crd','tun','dsp'],//[,'scales','chords','tuning'],
+            items: ['sca','crd','tun','dsp'],
             chordType: "null"
         };
     }
@@ -95,6 +95,26 @@ class OptionsListTransition extends React.Component {
             temp.shift();
         }
 
+        //for each new item to add
+        for(let i = 0; i < n; i++) {
+            
+            if(temp.length === maxListLength) {
+                //temp.shift();
+                temp.pop();
+            }
+
+            //temp = temp.filter(name => name !== children[i]);
+            //temp.push(children[i]);
+
+            //TODO: if chord is chosen need to remove notes, then add them back
+
+            if(!temp.includes(children[n-(i+1)]))
+            {
+                //temp.push(children[i]);
+                temp.unshift(children[n-(i+1)]);
+            }
+        }
+
         //then execute function here?
         let code = x.function;
         if(code !== []) {
@@ -116,7 +136,7 @@ class OptionsListTransition extends React.Component {
 
                     //TODO: dont like how this is done, page is kind of slow
                     let tempItems = this.state.items;
-                    tempItems.push(code.slice(2) + "Title"); //TODO: error when clear chord is selected "null" is not an option
+                    tempItems.unshift(code.slice(2) + "Title"); //TODO: error when clear chord is selected "null" is not an option
                     this.setState({items: tempItems});
 
                     if(code.slice(2) === "null") {
@@ -132,26 +152,6 @@ class OptionsListTransition extends React.Component {
                     break;
                 default:
                     //default case
-            }
-        }
-
-        //for each new item to add
-        for(let i = 0; i < n; i++) {
-            
-            if(temp.length === maxListLength) {
-                //temp.shift();
-                temp.pop();
-            }
-
-            //temp = temp.filter(name => name !== children[i]);
-            //temp.push(children[i]);
-
-            //TODO: if chord is chosen need to remove notes, then add them back
-
-            if(!temp.includes(children[n-(i+1)]))
-            {
-                //temp.push(children[i]);
-                temp.unshift(children[n-(i+1)]);
             }
         }
         
