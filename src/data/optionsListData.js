@@ -2,7 +2,7 @@ const notes = ["keyTitle","A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", 
 const chordRoot = ["rA", "rA#", "rB", "rC", "rC#", "rD", "rD#", "rE", "rF", "rF#", "rG", "rG#"];
 const modes = ["modeTitle","lydian", "ionian", "mixolydian", "dorian", "aeolian", "phrygian", "locrian"];
 //TODO: has issues -> const modes = ["modeTitle","lydian", "ionian", "mixolydian", "dorian", "aeolian", "phrygian", "locrian"];
-const tuningOps = ["tuneTitle", "standard", "NewST", "fifths", "drop d", "DADGAD","custom"];
+const tuningOps = ["tuneTitle", "standard", "NewST", "fifths", "drop d", "DADGAD", "stdRev", "custom"];
 const chordTypes = ["chordTitle","smaj","smin","smaj7","smin7","s7chrd","sdim","saug","ssus2","ssus4","snone","scus"];
 
 //TODO: fix chord item options, has bugs like remaining on the top of the list
@@ -26,7 +26,7 @@ export default[
     {name: "G", content: "G", children: modes, function: "K=G"},
     {name: "G#", content: "G#", children: modes, function: "K=G#"},
     //mode types title
-    {name: "modeTitle", content: "> modes", children: [], function: []},
+    {name: "modeTitle", content: "> choose mode", children: [], function: []},
     //modes
     {name: "lydian", content: modes[1], children: [], function: "M="+modes[1]},
     {name: "ionian", content: modes[2] + " (major)", children: [], function: "M="+modes[2]},
@@ -91,23 +91,24 @@ export default[
 
     //tuning
     {name: "tun", content: "- tuning -", children: tuningOps, function: []}, //tuning option
-    {name: "tuneTitle", content: "> tuning", children: [], function: []},
+    {name: "tuneTitle", content: "> choose tuning", children: [], function: []},
     //tuning types
     {name: "standard", content: "standard tuning", children: [], function: "T=E A D G B E"},
     {name: "NewST", content: "all fifths (NST)", children: [], function: "T=C G D A E G"},
     {name: "fifths", content: "all fifths", children: [], function: "T=C G D A E B"},
     {name: "drop d", content: "drop d", children: [], function: "T=D A D G B E"},
     {name: "DADGAD", content: "Dad-Gad", children: [], function: "T=D A D G A D"},
+    {name: "stdRev", content: "standard tuning (reversed)", children: [], function: "T=E B G D A E"},
     {name: "custom", content: "custom", children: ["infoCustomT"], function: []},
 
     //display option
-    {name: "dsp", content: "- change display - -", children: ["dispTitle", "showNotes", "showDegree"], function: []}, //display option
-    {name: "dispTitle", content: "> display", children: [], function: []},
+    {name: "dsp", content: "- notation - -", children: ["dispTitle", "showNotes", "showDegree"], function: []}, //display option
+    {name: "dispTitle", content: "> choose notation", children: [], function: []},
     {name: "showNotes", content: "notes", children: [], function: "D=N"},
     {name: "showDegree", content: "degrees", children: [], function: "D=D"},
     
     //info
-    {name: "infoCustomT", content: "! for custom tuning use the input boxes beside the fretboard", children: tuningOps, function: []},
+    {name: "infoCustomT", content: "! customise tuning with the boxes beside fretboard", children: tuningOps, function: []},
     {name: "infoCustomC", content: "! click on the fretboard to alter chord", children: [], function: []}
 
     //test items
