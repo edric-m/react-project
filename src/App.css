@@ -96,6 +96,7 @@ footer {
 .appFunctionsItem {
   /*display: flex;*/
   cursor: pointer;
+  margin-top: 9px;
 }
 .appFunctionsShortItem {
   display: inline;

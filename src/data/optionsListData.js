@@ -1,6 +1,6 @@
 const notes = ["keyTitle","A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 const chordRoot = ["rA", "rA#", "rB", "rC", "rC#", "rD", "rD#", "rE", "rF", "rF#", "rG", "rG#"];
-const modes = ["lydian", "ionian", "mixolydian", "dorian", "aeolian", "phrygian", "locrian"];
+const modes = ["modeTitle","lydian", "ionian", "mixolydian", "dorian", "aeolian", "phrygian", "locrian"];
 //TODO: has issues -> const modes = ["modeTitle","lydian", "ionian", "mixolydian", "dorian", "aeolian", "phrygian", "locrian"];
 const tuningOps = ["tuneTitle", "standard", "NewST", "fifths", "drop d", "DADGAD","custom"];
 const chordTypes = ["chordTitle","smaj","smin","smaj7","smin7","s7chrd","sdim","saug","ssus2","ssus4","snone","scus"];
@@ -11,7 +11,7 @@ const chordTypes = ["chordTitle","smaj","smin","smaj7","smin7","s7chrd","sdim","
 export default[
     //scale options
     {name: "sca", content: "- - modes -", children: notes, function: []}, //scales option
-    {name: "keyTitle", content: "> key center", children: [], function: []},
+    {name: "keyTitle", content: "> mode center", children: [], function: []},
     //pitch center
     {name: "A", content: "A", children: modes, function: "K=A"},
     {name: "A#", content: "A#", children: modes, function: "K=A#"},
@@ -28,13 +28,13 @@ export default[
     //mode types title
     {name: "modeTitle", content: "> modes", children: [], function: []},
     //modes
-    {name: "lydian", content: modes[0], children: [], function: "M="+modes[0]},
-    {name: "ionian", content: modes[1] + " (major)", children: [], function: "M="+modes[1]},
-    {name: "mixolydian", content: modes[2], children: [], function: "M="+modes[2]},
-    {name: "dorian", content: modes[3], children: [], function: "M="+modes[3]},
-    {name: "aeolian", content: modes[4] + " (minor)", children: [], function: "M="+modes[4]},
-    {name: "phrygian", content: modes[5], children: [], function: "M="+modes[5]},
-    {name: "locrian", content: modes[6], children: [], function: "M="+modes[6]},
+    {name: "lydian", content: modes[1], children: [], function: "M="+modes[1]},
+    {name: "ionian", content: modes[2] + " (major)", children: [], function: "M="+modes[2]},
+    {name: "mixolydian", content: modes[3], children: [], function: "M="+modes[3]},
+    {name: "dorian", content: modes[4], children: [], function: "M="+modes[4]},
+    {name: "aeolian", content: modes[5] + " (minor)", children: [], function: "M="+modes[5]},
+    {name: "phrygian", content: modes[6], children: [], function: "M="+modes[6]},
+    {name: "locrian", content: modes[7], children: [], function: "M="+modes[7]},
     
     //chords
     {name: "crd", content: "- chords -", children: chordTypes, function: []}, //chords option

@@ -82,38 +82,39 @@ class OptionsListTransition extends React.Component {
         let x = Data.find(x => x.name === itemName);
         let children = x.children;
         const n = children.length;
-        const maxListLength = 25;
+        const maxListLength = 26;
 
         //temp.pop();
         //temp.pop();
         //temp.pop();
         //temp.pop();
-
+        //remove main functions temporaraly
         temp.splice(0,4);
 
-        while(temp.length > maxListLength) {
-            temp.shift();
+        //TODO: if n == 0 jump to executing function
+        if(n > 0) {
+            while(temp.length > maxListLength) {
+                temp.shift();
+            }
+    
+            //for each new item to add
+            for(let i = 0; i < n; i++) {
+                
+                if(temp.length === maxListLength) {
+                    //temp.shift();
+                    temp.pop();
+                }
+    
+                if(!temp.includes(children[n-(i+1)]))
+                {
+                    //temp.push(children[i]);
+                    temp.unshift(children[n-(i+1)]);
+                }
+                //TODO: else remove them, then add them again to the top
+            }
         }
 
-        //for each new item to add
-        for(let i = 0; i < n; i++) {
-            
-            if(temp.length === maxListLength) {
-                //temp.shift();
-                temp.pop();
-            }
-
-            //temp = temp.filter(name => name !== children[i]);
-            //temp.push(children[i]);
-
-            //TODO: if chord is chosen need to remove notes, then add them back
-
-            if(!temp.includes(children[n-(i+1)]))
-            {
-                //temp.push(children[i]);
-                temp.unshift(children[n-(i+1)]);
-            }
-        }
+        
 
         //then execute function here?
         let code = x.function;
@@ -134,13 +135,19 @@ class OptionsListTransition extends React.Component {
                 case 'S':
                     this.setState({chordType: code.slice(2)});
 
-                    //TODO: dont like how this is done, page is kind of slow
-                    let tempItems = this.state.items;
-                    tempItems.unshift(code.slice(2) + "Title"); //TODO: error when clear chord is selected "null" is not an option
-                    this.setState({items: tempItems});
-
                     if(code.slice(2) === "null") {
                         this.props.chord([]);
+                    } else {
+                        //TODO: works for not, dont like how this is done, page is kind of slow
+                        let tempItems = this.state.items;
+                        //console.log(tempItems);
+                        if(tempItems[0].length > 2) {
+                            //console.log(tempItems.shift()); 
+                            tempItems.shift(); //remove the previous chord title
+                        }
+                        tempItems.unshift(code.slice(2) + "Title");
+                        this.setState({items: tempItems});
+                        //console.log(tempItems);
                     }
                     break;
                 case 'D':
@@ -186,7 +193,7 @@ class OptionsListTransition extends React.Component {
                     items={this.state.items}
                     //initial={null}
                     from={{ overflow: 'hidden', height: 0, opacity: 0 }}
-                    enter={{ height: 38, opacity: 1, background: '#FCFFFF' }}
+                    enter={{ height: 28, opacity: 1, background: '#FCFFFF' }} //height: 38 previously
                     leave={{ height: 0, opacity: 0, background: '#FCFFFF' }}
                     update={{ background: '#FCFFFF' }}
                     trail={50}>
